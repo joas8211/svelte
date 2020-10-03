@@ -264,7 +264,7 @@ export default class Block {
 					: this.chunks.hydrate
 			);
 
-			properties.create = x`function #create() {
+			properties.create = x`async function #create() {
 				${this.chunks.create}
 				${hydrate}
 			}`;
@@ -310,7 +310,7 @@ export default class Block {
 					dirty = { type: 'ArrayPattern', elements: [dirty] };
 				}
 
-				properties.update = x`function #update(${ctx}, ${dirty}) {
+				properties.update = x`async function #update(${ctx}, ${dirty}) {
 					${this.maintain_context && b`#ctx = ${ctx};`}
 					${this.chunks.update}
 				}`;
@@ -434,7 +434,7 @@ export default class Block {
 		const args: any[] = [x`#ctx`];
 		if (key) args.unshift(key);
 
-		const fn = b`function ${this.name}(${args}) {
+		const fn = b`async function ${this.name}(${args}) {
 			${this.get_contents(key)}
 		}`;
 

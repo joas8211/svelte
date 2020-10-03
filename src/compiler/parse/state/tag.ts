@@ -15,7 +15,8 @@ const meta_tags = new Map([
 	['svelte:head', 'Head'],
 	['svelte:options', 'Options'],
 	['svelte:window', 'Window'],
-	['svelte:body', 'Body']
+	['svelte:body', 'Body'],
+	['svelte:dependency', 'Dependency']
 ]);
 
 const valid_meta_tags = Array.from(meta_tags.keys()).concat('svelte:self', 'svelte:component');

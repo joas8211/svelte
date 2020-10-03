@@ -202,11 +202,11 @@ export default class AwaitBlockWrapper extends Wrapper {
 		`);
 
 		block.chunks.init.push(b`
-			@handle_promise(${promise} = ${snippet}, ${info});
+			await @handle_promise(${promise} = ${snippet}, ${info});
 		`);
 
 		block.chunks.create.push(b`
-			${info}.block.c();
+			await ${info}.block.c();
 		`);
 
 		if (parent_nodes && this.renderer.options.hydratable) {
@@ -245,7 +245,7 @@ export default class AwaitBlockWrapper extends Wrapper {
 			const condition = x`
 				${block.renderer.dirty(dependencies)} &&
 				${promise} !== (${promise} = ${snippet}) &&
-				@handle_promise(${promise}, ${info})`;
+				await @handle_promise(${promise}, ${info})`;
 
 			block.chunks.update.push(
 				b`${info}.ctx = #ctx;`
@@ -258,7 +258,7 @@ export default class AwaitBlockWrapper extends Wrapper {
 					} else {
 						const #child_ctx = #ctx.slice();
 						${update_child_context}
-						${info}.block.p(#child_ctx, #dirty);
+						await ${info}.block.p(#child_ctx, #dirty);
 					}
 				`);
 			} else {
@@ -272,7 +272,7 @@ export default class AwaitBlockWrapper extends Wrapper {
 					{
 						const #child_ctx = #ctx.slice();
 						${update_child_context}
-						${info}.block.p(#child_ctx, #dirty);
+						await ${info}.block.p(#child_ctx, #dirty);
 					}
 				`);
 			}

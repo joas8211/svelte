@@ -76,13 +76,13 @@ export function flush() {
 	seen_callbacks.clear();
 }
 
-function update($$) {
+async function update($$) {
 	if ($$.fragment !== null) {
-		$$.update();
+		await $$.update();
 		run_all($$.before_update);
 		const dirty = $$.dirty;
 		$$.dirty = [-1];
-		$$.fragment && $$.fragment.p($$.ctx, dirty);
+		$$.fragment && await $$.fragment.p($$.ctx, dirty);
 
 		$$.after_update.forEach(add_render_callback);
 	}

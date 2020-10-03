@@ -312,7 +312,7 @@ export default class EachBlockWrapper extends Wrapper {
 			if (this.else.block.has_update_method) {
 				this.updates.push(b`
 					if (!${this.vars.data_length} && ${each_block_else}) {
-						${each_block_else}.p(#ctx, #dirty);
+						await ${each_block_else}.p(#ctx, #dirty);
 					} else if (!${this.vars.data_length}) {
 						${each_block_else} = ${this.else.block.name}(#ctx);
 						${each_block_else}.c();
@@ -530,7 +530,7 @@ export default class EachBlockWrapper extends Wrapper {
 			const for_loop_body = this.block.has_update_method
 				? b`
 					if (${iterations}[#i]) {
-						${iterations}[#i].p(child_ctx, #dirty);
+						await ${iterations}[#i].p(child_ctx, #dirty);
 						${has_transitions && b`@transition_in(${this.vars.iterations}[#i], 1);`}
 					} else {
 						${iterations}[#i] = ${create_each_block}(child_ctx);

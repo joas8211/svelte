@@ -44,8 +44,8 @@ export function bind(component, name, callback) {
 	}
 }
 
-export function create_component(block) {
-	block && block.c();
+export async function create_component(block) {
+	block && await block.c();
 }
 
 export function claim_component(block, parent_nodes) {
@@ -96,7 +96,7 @@ function make_dirty(component, i) {
 	component.$$.dirty[(i / 31) | 0] |= (1 << (i % 31));
 }
 
-export function init(component, options, instance, create_fragment, not_equal, props, dirty = [-1]) {
+export async function init(component, options, instance, create_fragment, not_equal, props, dirty = [-1]) {
 	const parent_component = current_component;
 	set_current_component(component);
 
@@ -143,7 +143,7 @@ export function init(component, options, instance, create_fragment, not_equal, p
 	run_all($$.before_update);
 
 	// `false` as a special case of no DOM component
-	$$.fragment = create_fragment ? create_fragment($$.ctx) : false;
+	$$.fragment = create_fragment ? await create_fragment($$.ctx) : false;
 
 	if (options.target) {
 		if (options.hydrate) {

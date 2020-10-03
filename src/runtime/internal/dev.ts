@@ -106,7 +106,7 @@ export interface SvelteComponentDev {
 }
 
 export class SvelteComponentDev extends SvelteComponent {
-	constructor(options: {
+	async init(options: {
 		target: Element;
 		anchor?: Element;
 		props?: Props;
@@ -117,8 +117,6 @@ export class SvelteComponentDev extends SvelteComponent {
 		if (!options || (!options.target && !options.$$inline)) {
 			throw new Error(`'target' is a required option`);
 		}
-
-		super();
 	}
 
 	$destroy() {

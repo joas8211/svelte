@@ -286,7 +286,7 @@ export default function dom(
 	const has_create_fragment = component.compile_options.dev || block.has_content();
 	if (has_create_fragment) {
 		body.push(b`
-			function create_fragment(#ctx) {
+			async function create_fragment(#ctx) {
 				${block.get_contents()}
 			}
 		`);
@@ -469,12 +469,10 @@ export default function dom(
 	if (options.customElement) {
 		const declaration = b`
 			class ${name} extends @SvelteElement {
-				constructor(options) {
-					super();
-
+				async init(options) {
 					${css.code && b`this.shadowRoot.innerHTML = \`<style>${css.code.replace(/\\/g, '\\\\')}${options.dev ? `\n/*# sourceMappingURL=${css.map.toUrl()} */` : ''}</style>\`;`}
 
-					@init(this, { target: this.shadowRoot }, ${definition}, ${has_create_fragment ? 'create_fragment': 'null'}, ${not_equal}, ${prop_indexes}, ${dirty});
+					await @init(this, { target: this.shadowRoot }, ${definition}, ${has_create_fragment ? 'create_fragment': 'null'}, ${not_equal}, ${prop_indexes}, ${dirty});
 
 					${dev_props_check}
 
@@ -523,10 +521,16 @@ export default function dom(
 
 		const declaration = b`
 			class ${name} extends ${superclass} {
-				constructor(options) {
-					super(${options.dev && `options`});
+				static async init(options) {
+					const instance = new ${name}();
+					await instance.init(options);
+					return instance;
+				}
+
+				async init(options) {
+					${options.dev && b`super.init(${options.dev && `options`});`}
 					${should_add_css && b`if (!@_document.getElementById("${component.stylesheet.id}-style")) ${add_css}();`}
-					@init(this, options, ${definition}, ${has_create_fragment ? 'create_fragment': 'null'}, ${not_equal}, ${prop_indexes}, ${dirty});
+					await @init(this, options, ${definition}, ${has_create_fragment ? 'create_fragment': 'null'}, ${not_equal}, ${prop_indexes}, ${dirty});
 					${options.dev && b`@dispatch_dev("SvelteRegisterComponent", { component: this, tagName: "${name.name}", options, id: create_fragment.name });`}
 
 					${dev_props_check}

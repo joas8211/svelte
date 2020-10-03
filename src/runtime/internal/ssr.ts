@@ -74,13 +74,13 @@ export function debug(file, line, column, values) {
 let on_destroy;
 
 export function create_ssr_component(fn) {
-	function $$render(result, props, bindings, slots) {
+	async function $$render(result, props, bindings, slots) {
 		const parent_component = current_component;
 
 		const $$ = {
 			on_destroy,
 			context: new Map(parent_component ? parent_component.$$.context : []),
-
+			
 			// these will be immediately discarded
 			on_mount: [],
 			before_update: [],
@@ -90,14 +90,14 @@ export function create_ssr_component(fn) {
 
 		set_current_component({ $$ });
 
-		const html = fn(result, props, bindings, slots);
-
+		const html = await fn(result, props, bindings, slots);
+		
 		set_current_component(parent_component);
 		return html;
 	}
 
 	return {
-		render: (props = {}, options = {}) => {
+		render: async (props = {}, options = {}) => {
 			on_destroy = [];
 
 			const result: {
@@ -109,7 +109,7 @@ export function create_ssr_component(fn) {
 				}>;
 			} = { title: '', head: '', css: new Set() };
 
-			const html = $$render(result, props, {}, options);
+			const html = await $$render(result, props, {}, options);
 
 			run_all(on_destroy);
 

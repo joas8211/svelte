@@ -321,7 +321,7 @@ export default class IfBlockWrapper extends Wrapper {
 			if (dynamic) {
 				block.chunks.update.push(b`
 					if (${current_block_type} === (${current_block_type} = ${select_block_type}(#ctx, #dirty)) && ${name}) {
-						${name}.p(#ctx, #dirty);
+						await ${name}.p(#ctx, #dirty);
 					} else {
 						${change_block}
 					}
@@ -337,7 +337,7 @@ export default class IfBlockWrapper extends Wrapper {
 			if (if_exists_condition) {
 				block.chunks.update.push(b`if (${if_exists_condition}) ${name}.p(#ctx, #dirty);`);
 			} else {
-				block.chunks.update.push(b`${name}.p(#ctx, #dirty);`);
+				block.chunks.update.push(b`await ${name}.p(#ctx, #dirty);`);
 			}
 		}
 
@@ -475,7 +475,7 @@ export default class IfBlockWrapper extends Wrapper {
 					let ${previous_block_index} = ${current_block_type_index};
 					${current_block_type_index} = ${select_block_type}(#ctx, #dirty);
 					if (${current_block_type_index} === ${previous_block_index}) {
-						${if_current_block_type_index(b`${if_blocks}[${current_block_type_index}].p(#ctx, #dirty);`)}
+						${if_current_block_type_index(b`await ${if_blocks}[${current_block_type_index}].p(#ctx, #dirty);`)}
 					} else {
 						${change_block}
 					}
@@ -493,7 +493,7 @@ export default class IfBlockWrapper extends Wrapper {
 			if (if_exists_condition) {
 				block.chunks.update.push(b`if (${if_exists_condition}) ${name}.p(#ctx, #dirty);`);
 			} else {
-				block.chunks.update.push(b`${name}.p(#ctx, #dirty);`);
+				block.chunks.update.push(b`await ${name}.p(#ctx, #dirty);`);
 			}
 		}
 
@@ -530,7 +530,7 @@ export default class IfBlockWrapper extends Wrapper {
 
 			const enter = b`
 				if (${name}) {
-					${dynamic && b`${name}.p(#ctx, #dirty);`}
+					${dynamic && b`await ${name}.p(#ctx, #dirty);`}
 					${
 						has_transitions &&
 						b`if (${block.renderer.dirty(branch.dependencies)}) {
@@ -575,7 +575,7 @@ export default class IfBlockWrapper extends Wrapper {
 			}
 		} else if (dynamic) {
 			block.chunks.update.push(b`
-				if (${branch.condition}) ${name}.p(#ctx, #dirty);
+				if (${branch.condition}) await ${name}.p(#ctx, #dirty);
 			`);
 		}
 

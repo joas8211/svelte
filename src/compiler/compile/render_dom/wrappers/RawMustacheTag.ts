@@ -48,7 +48,7 @@ export default class RawMustacheTagWrapper extends Tag {
 
 			const { init } = this.rename_this_method(
 				block,
-				content => x`${html_tag}.p(${content})`
+				content => x`await ${html_tag}.p(${content})`
 			);
 
 			const update_anchor = needs_anchor ? html_anchor : this.next ? this.next.var : 'null';

@@ -11,6 +11,7 @@ import Slot from './handlers/Slot';
 import Tag from './handlers/Tag';
 import Text from './handlers/Text';
 import Title from './handlers/Title';
+import Dependency from './handlers/Dependency';
 import { AppendTarget, CompileOptions } from '../../interfaces';
 import { INode } from '../nodes/interfaces';
 import { Expression, TemplateLiteral, Identifier } from 'estree';
@@ -36,7 +37,8 @@ const handlers: Record<string, Handler> = {
 	Slot,
 	Text,
 	Title,
-	Window: noop
+	Window: noop,
+	Dependency,
 };
 
 export interface RenderOptions extends CompileOptions{

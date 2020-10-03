@@ -97,7 +97,7 @@ export default function(node: InlineComponent, renderer: Renderer, options: Rend
 		${slot_fns}
 	}`;
 
-	renderer.add_expression(x`@validate_component(${expression}, "${node.name}").$$render($$result, ${props}, ${bindings}, ${slots})`);
+	renderer.add_expression(x`await @validate_component(${expression}, "${node.name}").$$render($$result, ${props}, ${bindings}, ${slots})`);
 }
 
 function is_empty_template_literal(template_literal) {
