@@ -1,3 +1,7 @@
+function wait() {
+	return new Promise(resolve => setTimeout(resolve, 0));
+}
+
 export default {
 	html: `<p>escaped: false</p>`,
 
@@ -7,7 +11,7 @@ export default {
 		});
 
 		await window.dispatchEvent(event);
-
+		await wait();
 		assert.htmlEqual(target.innerHTML, `
 			<p>escaped: true</p>
 		`);

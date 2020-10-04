@@ -117,7 +117,7 @@ describe("runtime", () => {
 			});
 
 			return Promise.resolve()
-				.then(() => {
+				.then(async () => {
 					// hack to support transition tests
 					clear_loops();
 
@@ -166,7 +166,7 @@ describe("runtime", () => {
 						intro: config.intro
 					}, config.options || {});
 
-					const component = new SvelteComponent(options);
+					const component = await SvelteComponent.init(options);
 
 					console.warn = warn;
 
@@ -285,16 +285,16 @@ describe("runtime", () => {
 	it("fails if options.target is missing in dev mode", async () => {
 		const App = await create_component();
 
-		assert.throws(() => {
-			new App();
+		assert.throws(async () => {
+			await App.init();
 		}, /'target' is a required option/);
 	});
 
 	it("fails if options.hydrate is true but the component is non-hydratable", async () => {
 		const App = await create_component();
 
-		assert.throws(() => {
-			new App({
+		assert.throws(async () => {
+			await App.init({
 				target: { childNodes: [] },
 				hydrate: true
 			});

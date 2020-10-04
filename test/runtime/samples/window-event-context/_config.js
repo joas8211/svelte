@@ -1,3 +1,7 @@
+function wait() {
+	return new Promise(resolve => setTimeout(resolve, 0));
+}
+
 export default {
 	props: {
 		foo: true
@@ -13,10 +17,12 @@ export default {
 
 		await window.dispatchEvent(event);
 		assert.equal(component.foo, false);
+		await wait();
 		assert.htmlEqual(target.innerHTML, `false`);
 
 		await window.dispatchEvent(event);
 		assert.equal(component.foo, true);
+		await wait();
 		assert.htmlEqual(target.innerHTML, `true`);
 	}
 };
