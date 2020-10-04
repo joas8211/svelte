@@ -54,11 +54,11 @@ export async function handle_promise(promise, info) {
 
 	if (is_promise(promise)) {
 		const current_component = get_current_component();
-		promise.then(value => {
+		promise.then(async value => {
 			set_current_component(current_component);
 			await update(info.then, 1, info.value, value);
 			set_current_component(null);
-		}, error => {
+		}, async error => {
 			if (!info.hasCatch) {
 				throw error;
 			}
