@@ -153,7 +153,7 @@ export async function init(component, options, instance, create_fragment, not_eq
 			nodes.forEach(detach);
 		} else {
 			// eslint-disable-next-line @typescript-eslint/no-non-null-assertion
-			$$.fragment && $$.fragment!.c();
+			$$.fragment && await $$.fragment!.c();
 		}
 
 		if (options.intro) transition_in(component.$$.fragment);

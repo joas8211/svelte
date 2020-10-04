@@ -107,11 +107,11 @@ export function get_slot_changes(definition, $$scope, dirty, fn) {
 	return $$scope.dirty;
 }
 
-export function update_slot(slot, slot_definition, ctx, $$scope, dirty, get_slot_changes_fn, get_slot_context_fn) {
+export async function update_slot(slot, slot_definition, ctx, $$scope, dirty, get_slot_changes_fn, get_slot_context_fn) {
 	const slot_changes = get_slot_changes(slot_definition, $$scope, dirty, get_slot_changes_fn);
 	if (slot_changes) {
 		const slot_context = get_slot_context(slot_definition, ctx, $$scope, get_slot_context_fn);
-		slot.p(slot_context, slot_changes);
+		await slot.p(slot_context, slot_changes);
 	}
 }
 

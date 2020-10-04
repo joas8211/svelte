@@ -272,7 +272,7 @@ export default class EachBlockWrapper extends Wrapper {
 			// TODO neaten this up... will end up with an empty line in the block
 			block.chunks.init.push(b`
 				if (!${this.vars.data_length}) {
-					${each_block_else} = ${this.else.block.name}(#ctx);
+					${each_block_else} = await ${this.else.block.name}(#ctx);
 				}
 			`);
 
@@ -314,7 +314,7 @@ export default class EachBlockWrapper extends Wrapper {
 					if (!${this.vars.data_length} && ${each_block_else}) {
 						await ${each_block_else}.p(#ctx, #dirty);
 					} else if (!${this.vars.data_length}) {
-						${each_block_else} = ${this.else.block.name}(#ctx);
+						${each_block_else} = await ${this.else.block.name}(#ctx);
 						${each_block_else}.c();
 						${has_transitions && b`@transition_in(${each_block_else}, 1);`}
 						${each_block_else}.m(${update_mount_node}, ${update_anchor_node});
@@ -408,7 +408,7 @@ export default class EachBlockWrapper extends Wrapper {
 			for (let #i = 0; #i < ${data_length}; #i += 1) {
 				let child_ctx = ${this.vars.get_each_context}(#ctx, ${this.vars.each_block_value}, #i);
 				let key = ${get_key}(child_ctx);
-				${lookup}.set(key, ${iterations}[#i] = ${create_each_block}(key, child_ctx));
+				${lookup}.set(key, ${iterations}[#i] = await ${create_each_block}(key, child_ctx));
 			}
 		`);
 
@@ -500,7 +500,7 @@ export default class EachBlockWrapper extends Wrapper {
 			let ${iterations} = [];
 
 			for (let #i = 0; #i < ${data_length}; #i += 1) {
-				${iterations}[#i] = ${create_each_block}(${this.vars.get_each_context}(#ctx, ${this.vars.each_block_value}, #i));
+				${iterations}[#i] = await ${create_each_block}(${this.vars.get_each_context}(#ctx, ${this.vars.each_block_value}, #i));
 			}
 		`);
 
@@ -533,7 +533,7 @@ export default class EachBlockWrapper extends Wrapper {
 						await ${iterations}[#i].p(child_ctx, #dirty);
 						${has_transitions && b`@transition_in(${this.vars.iterations}[#i], 1);`}
 					} else {
-						${iterations}[#i] = ${create_each_block}(child_ctx);
+						${iterations}[#i] = await ${create_each_block}(child_ctx);
 						${iterations}[#i].c();
 						${has_transitions && b`@transition_in(${this.vars.iterations}[#i], 1);`}
 						${iterations}[#i].m(${update_mount_node}, ${update_anchor_node});
@@ -544,7 +544,7 @@ export default class EachBlockWrapper extends Wrapper {
 						if (${iterations}[#i]) {
 							@transition_in(${this.vars.iterations}[#i], 1);
 						} else {
-							${iterations}[#i] = ${create_each_block}(child_ctx);
+							${iterations}[#i] = await ${create_each_block}(child_ctx);
 							${iterations}[#i].c();
 							@transition_in(${this.vars.iterations}[#i], 1);
 							${iterations}[#i].m(${update_mount_node}, ${update_anchor_node});
@@ -552,7 +552,7 @@ export default class EachBlockWrapper extends Wrapper {
 					`
 					: b`
 						if (!${iterations}[#i]) {
-							${iterations}[#i] = ${create_each_block}(child_ctx);
+							${iterations}[#i] = await ${create_each_block}(child_ctx);
 							${iterations}[#i].c();
 							${iterations}[#i].m(${update_mount_node}, ${update_anchor_node});
 						}

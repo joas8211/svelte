@@ -162,7 +162,7 @@ export default class SlotWrapper extends Wrapper {
 
 		const slot_update = b`
 			if (${slot}.p && ${renderer.dirty(dynamic_dependencies)}) {
-				@update_slot(${slot}, ${slot_definition}, #ctx, ${renderer.reference('$$scope')}, #dirty, ${get_slot_changes_fn}, ${get_slot_context_fn});
+				await @update_slot(${slot}, ${slot_definition}, #ctx, ${renderer.reference('$$scope')}, #dirty, ${get_slot_changes_fn}, ${get_slot_context_fn});
 			}
 		`;
 		const fallback_update = has_fallback && fallback_dynamic_dependencies.length > 0 && b`
