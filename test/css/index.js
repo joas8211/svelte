@@ -52,7 +52,7 @@ describe('css', () => {
 			throw new Error('Forgot to remove `solo: true` from test');
 		}
 
-		(solo ? it.only : skip ? it.skip : it)(dir, () => {
+		(solo ? it.only : skip ? it.skip : it)(dir, async () => {
 			const config = try_require(`./samples/${dir}/_config.js`) || {};
 			const input = fs
 				.readFileSync(`${__dirname}/samples/${dir}/input.svelte`, 'utf-8')
@@ -124,7 +124,7 @@ describe('css', () => {
 				try {
 					const target = window.document.querySelector('main');
 
-					new ClientComponent({ target, props: config.props });
+					await ClientComponent.init({ target, props: config.props });
 					const html = target.innerHTML;
 
 					fs.writeFileSync(`${__dirname}/samples/${dir}/_actual.html`, html);
@@ -140,7 +140,7 @@ describe('css', () => {
 
 				// ssr
 				try {
-					const actual_ssr = ServerComponent.render(config.props).html.replace(/svelte(-ref)?-[a-z0-9]+/g, (m, $1) => $1 ? m : 'svelte-xyz');
+					const actual_ssr = (await ServerComponent.render(config.props)).html.replace(/svelte(-ref)?-[a-z0-9]+/g, (m, $1) => $1 ? m : 'svelte-xyz');
 					assert.htmlEqual(actual_ssr, expected.html);
 				} catch (err) {
 					console.log(ssr.js.code);
