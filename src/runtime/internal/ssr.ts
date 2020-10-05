@@ -44,10 +44,10 @@ export function escape(html) {
 	return String(html).replace(/["'&<>]/g, match => escaped[match]);
 }
 
-export function each(items, fn) {
+export async function each(items, fn) {
 	let str = '';
 	for (let i = 0; i < items.length; i += 1) {
-		str += fn(items[i], i);
+		str += await fn(items[i], i);
 	}
 	return str;
 }

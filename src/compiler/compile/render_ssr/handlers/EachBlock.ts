@@ -10,7 +10,7 @@ export default function(node: EachBlock, renderer: Renderer, options: RenderOpti
 	renderer.render(node.children, options);
 	const result = renderer.pop();
 
-	const consequent = x`@each(${node.expression.node}, (${args}) => ${result})`;
+	const consequent = x`await @each(${node.expression.node}, async (${args}) => ${result})`;
 
 	if (node.else) {
 		renderer.push();

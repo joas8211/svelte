@@ -12,9 +12,9 @@ export default function(node: AwaitBlock, renderer: Renderer, options: RenderOpt
 	const then = renderer.pop();
 
 	renderer.add_expression(x`
-		async function(__value) {
+		await (async function(__value) {
 			if (@is_promise(__value)) return ${pending};
 			return await (async function(${node.then_node ? node.then_node : ''}) { return ${then}; }(__value));
-		}(${node.expression.node})
+		})(${node.expression.node})
 	`);
 }

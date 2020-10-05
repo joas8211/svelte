@@ -87,7 +87,7 @@ export default function(node: InlineComponent, renderer: Renderer, options: Rend
 		slot_scopes.forEach(({ input, output }, name) => {
 			if (!is_empty_template_literal(output)) {
 				slot_fns.push(
-					p`${name}: (${input}) => ${output}`
+					p`${name}: async (${input}) => ${output}`
 				);
 			}
 		});
