@@ -210,7 +210,7 @@ export default function ssr(
 
 		${component.fully_hoisted}
 
-		const ${name} = @create_ssr_component(($$result, $$props, $$bindings, #slots) => {
+		const ${name} = @create_ssr_component(async ($$result, $$props, $$bindings, #slots) => {
 			${blocks}
 		});
 	`;

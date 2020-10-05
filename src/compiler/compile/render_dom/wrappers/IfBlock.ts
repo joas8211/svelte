@@ -214,9 +214,9 @@ export default class IfBlockWrapper extends Wrapper {
 		}
 
 		if (if_exists_condition) {
-			block.chunks.create.push(b`if (${if_exists_condition}) ${name}.c();`);
+			block.chunks.create.push(b`if (${if_exists_condition}) await ${name}.c();`);
 		} else {
-			block.chunks.create.push(b`${name}.c();`);
+			block.chunks.create.push(b`await ${name}.c();`);
 		}
 
 		if (parent_nodes && this.renderer.options.hydratable) {
@@ -260,8 +260,8 @@ export default class IfBlockWrapper extends Wrapper {
 		const select_block_type = this.renderer.component.get_unique_name('select_block_type');
 		const current_block_type = block.get_unique_name('current_block_type');
 		const get_block = has_else
-			? x`${current_block_type}(#ctx)`
-			: x`${current_block_type} && ${current_block_type}(#ctx)`;
+			? x`await ${current_block_type}(#ctx)`
+			: x`${current_block_type} && await ${current_block_type}(#ctx)`;
 
 		if (this.needs_update) {
 			block.chunks.init.push(b`
@@ -312,7 +312,7 @@ export default class IfBlockWrapper extends Wrapper {
 				${if_exists_condition ? b`if (${if_exists_condition}) ${name}.d(1)` : b`${name}.d(1)`};
 				${name} = ${get_block};
 				if (${name}) {
-					${name}.c();
+					await ${name}.c();
 					${has_transitions && b`@transition_in(${name}, 1);`}
 					${name}.m(${update_mount_node}, ${anchor});
 				}
@@ -321,7 +321,7 @@ export default class IfBlockWrapper extends Wrapper {
 			if (dynamic) {
 				block.chunks.update.push(b`
 					if (${current_block_type} === (${current_block_type} = ${select_block_type}(#ctx, #dirty)) && ${name}) {
-						${name}.p(#ctx, #dirty);
+						await ${name}.p(#ctx, #dirty);
 					} else {
 						${change_block}
 					}
@@ -335,9 +335,9 @@ export default class IfBlockWrapper extends Wrapper {
 			}
 		} else if (dynamic) {
 			if (if_exists_condition) {
-				block.chunks.update.push(b`if (${if_exists_condition}) ${name}.p(#ctx, #dirty);`);
+				block.chunks.update.push(b`if (${if_exists_condition}) await ${name}.p(#ctx, #dirty);`);
 			} else {
-				block.chunks.update.push(b`${name}.p(#ctx, #dirty);`);
+				block.chunks.update.push(b`await ${name}.p(#ctx, #dirty);`);
 			}
 		}
 
@@ -412,12 +412,12 @@ export default class IfBlockWrapper extends Wrapper {
 		if (has_else) {
 			block.chunks.init.push(b`
 				${current_block_type_index} = ${select_block_type}(#ctx, ${this.get_initial_dirty_bit()});
-				${name} = ${if_blocks}[${current_block_type_index}] = ${if_block_creators}[${current_block_type_index}](#ctx);
+				${name} = ${if_blocks}[${current_block_type_index}] = await ${if_block_creators}[${current_block_type_index}](#ctx);
 			`);
 		} else {
 			block.chunks.init.push(b`
 				if (~(${current_block_type_index} = ${select_block_type}(#ctx, ${this.get_initial_dirty_bit()}))) {
-					${name} = ${if_blocks}[${current_block_type_index}] = ${if_block_creators}[${current_block_type_index}](#ctx);
+					${name} = ${if_blocks}[${current_block_type_index}] = await ${if_block_creators}[${current_block_type_index}](#ctx);
 				}
 			`);
 		}
@@ -445,10 +445,10 @@ export default class IfBlockWrapper extends Wrapper {
 			const create_new_block = b`
 				${name} = ${if_blocks}[${current_block_type_index}];
 				if (!${name}) {
-					${name} = ${if_blocks}[${current_block_type_index}] = ${if_block_creators}[${current_block_type_index}](#ctx);
-					${name}.c();
+					${name} = ${if_blocks}[${current_block_type_index}] = await ${if_block_creators}[${current_block_type_index}](#ctx);
+					await ${name}.c();
 				} else {
-					${dynamic && b`${name}.p(#ctx, #dirty);`}
+					${dynamic && b`await ${name}.p(#ctx, #dirty);`}
 				}
 				${has_transitions && b`@transition_in(${name}, 1);`}
 				${name}.m(${update_mount_node}, ${anchor});
@@ -480,7 +480,7 @@ export default class IfBlockWrapper extends Wrapper {
 			if (dynamic) {
 				block.chunks.update.push(b`
 					if (${current_block_type_index} === ${previous_block_index}) {
-						${if_current_block_type_index(b`${if_blocks}[${current_block_type_index}].p(#ctx, #dirty);`)}
+						${if_current_block_type_index(b`await ${if_blocks}[${current_block_type_index}].p(#ctx, #dirty);`)}
 					} else {
 						${change_block}
 					}
@@ -496,7 +496,7 @@ export default class IfBlockWrapper extends Wrapper {
 			if (if_exists_condition) {
 				block.chunks.update.push(b`if (${if_exists_condition}) ${name}.p(#ctx, #dirty);`);
 			} else {
-				block.chunks.update.push(b`${name}.p(#ctx, #dirty);`);
+				block.chunks.update.push(b`await ${name}.p(#ctx, #dirty);`);
 			}
 		}
 
@@ -518,7 +518,7 @@ export default class IfBlockWrapper extends Wrapper {
 		if (branch.snippet) block.add_variable(branch.condition, branch.snippet);
 
 		block.chunks.init.push(b`
-			let ${name} = ${branch.condition} && ${branch.block.name}(#ctx);
+			let ${name} = ${branch.condition} && await ${branch.block.name}(#ctx);
 		`);
 
 		const initial_mount_node = parent_node || '#target';
@@ -533,7 +533,7 @@ export default class IfBlockWrapper extends Wrapper {
 
 			const enter = b`
 				if (${name}) {
-					${dynamic && b`${name}.p(#ctx, #dirty);`}
+					${dynamic && b`await ${name}.p(#ctx, #dirty);`}
 					${
 						has_transitions &&
 						b`if (${block.renderer.dirty(branch.dependencies)}) {
@@ -541,8 +541,8 @@ export default class IfBlockWrapper extends Wrapper {
 						}`
 					}
 				} else {
-					${name} = ${branch.block.name}(#ctx);
-					${name}.c();
+					${name} = await ${branch.block.name}(#ctx);
+					await ${name}.c();
 					${has_transitions && b`@transition_in(${name}, 1);`}
 					${name}.m(${update_mount_node}, ${anchor});
 				}
@@ -578,7 +578,7 @@ export default class IfBlockWrapper extends Wrapper {
 			}
 		} else if (dynamic) {
 			block.chunks.update.push(b`
-				if (${branch.condition}) ${name}.p(#ctx, #dirty);
+				if (${branch.condition}) await ${name}.p(#ctx, #dirty);
 			`);
 		}
 

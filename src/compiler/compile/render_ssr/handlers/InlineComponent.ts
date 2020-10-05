@@ -78,7 +78,7 @@ export default function(node: InlineComponent, renderer: Renderer, options: Rend
 
 		slot_scopes.forEach(({ input, output }, name) => {
 			slot_fns.push(
-				p`${name}: (${input}) => ${output}`
+				p`${name}: async (${input}) => ${output}`
 			);
 		});
 	}
@@ -97,7 +97,7 @@ export default function(node: InlineComponent, renderer: Renderer, options: Rend
 		renderer.add_string('">');
 	}
 
-	renderer.add_expression(x`@validate_component(${expression}, "${node.name}").$$render($$result, ${props}, ${bindings}, ${slots})`);
+	renderer.add_expression(x`await @validate_component(${expression}, "${node.name}").$$render($$result, ${props}, ${bindings}, ${slots})`);
 
 	if (node.css_custom_properties.length > 0) {
 		renderer.add_string('</div>');

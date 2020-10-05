@@ -44,10 +44,10 @@ export function escape(html) {
 	return String(html).replace(/["'&<>]/g, match => escaped[match]);
 }
 
-export function each(items, fn) {
+export async function each(items, fn) {
 	let str = '';
 	for (let i = 0; i < items.length; i += 1) {
-		str += fn(items[i], i);
+		str += await fn(items[i], i);
 	}
 	return str;
 }
@@ -74,7 +74,7 @@ export function debug(file, line, column, values) {
 let on_destroy;
 
 export function create_ssr_component(fn) {
-	function $$render(result, props, bindings, slots, context) {
+	async function $$render(result, props, bindings, slots, context) {
 		const parent_component = current_component;
 
 		const $$ = {
@@ -90,14 +90,13 @@ export function create_ssr_component(fn) {
 
 		set_current_component({ $$ });
 
-		const html = fn(result, props, bindings, slots);
-
+		const html = await fn(result, props, bindings, slots);
 		set_current_component(parent_component);
 		return html;
 	}
 
 	return {
-		render: (props = {}, { $$slots = {}, context = new Map() } = {}) => {
+		render: async (props = {}, { $$slots = {}, context = new Map() } = {}) => {
 			on_destroy = [];
 
 			const result: {
@@ -109,7 +108,7 @@ export function create_ssr_component(fn) {
 				}>;
 			} = { title: '', head: '', css: new Set() };
 
-			const html = $$render(result, props, {}, $$slots, context);
+			const html = await $$render(result, props, {}, $$slots, context);
 
 			run_all(on_destroy);
 

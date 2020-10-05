@@ -3,10 +3,10 @@ import { check_outros, group_outros, transition_in, transition_out } from './tra
 import { flush } from './scheduler';
 import { get_current_component, set_current_component } from './lifecycle';
 
-export function handle_promise(promise, info) {
+export async function handle_promise(promise, info) {
 	const token = info.token = {};
 
-	function update(type, index, key?, value?) {
+	async function update(type, index, key?, value?) {
 		if (info.token !== token) return;
 
 		info.resolved = value;
@@ -18,7 +18,7 @@ export function handle_promise(promise, info) {
 			child_ctx[key] = value;
 		}
 
-		const block = type && (info.current = type)(child_ctx);
+		const block = type && await (info.current = type)(child_ctx);
 
 		let needs_flush = false;
 
@@ -39,7 +39,7 @@ export function handle_promise(promise, info) {
 				info.block.d(1);
 			}
 
-			block.c();
+			await block.c();
 			transition_in(block, 1);
 			block.m(info.mount(), info.anchor);
 
@@ -50,19 +50,19 @@ export function handle_promise(promise, info) {
 		if (info.blocks) info.blocks[index] = block;
 
 		if (needs_flush) {
-			flush();
+			await flush();
 		}
 	}
 
 	if (is_promise(promise)) {
 		const current_component = get_current_component();
-		promise.then(value => {
+		promise.then(async value => {
 			set_current_component(current_component);
-			update(info.then, 1, info.value, value);
+			await update(info.then, 1, info.value, value);
 			set_current_component(null);
-		}, error => {
+		}, async error => {
 			set_current_component(current_component);
-			update(info.catch, 2, info.error, error);
+			await update(info.catch, 2, info.error, error);
 			set_current_component(null);
 			if (!info.hasCatch) {
 				throw error;
@@ -71,12 +71,12 @@ export function handle_promise(promise, info) {
 
 		// if we previously had a then/catch block, destroy it
 		if (info.current !== info.pending) {
-			update(info.pending, 0);
+			await update(info.pending, 0);
 			return true;
 		}
 	} else {
 		if (info.current !== info.then) {
-			update(info.then, 1, info.value, promise);
+			await update(info.then, 1, info.value, promise);
 			return true;
 		}
 
@@ -84,7 +84,7 @@ export function handle_promise(promise, info) {
 	}
 }
 
-export function update_await_block_branch(info, ctx, dirty) {
+export async function update_await_block_branch(info, ctx, dirty) {
 	const child_ctx = ctx.slice();
 	const { resolved } = info;
 
@@ -95,5 +95,5 @@ export function update_await_block_branch(info, ctx, dirty) {
 		child_ctx[info.error] = resolved;
 	}
 
-	info.block.p(child_ctx, dirty);
+	return info.block.p(child_ctx, dirty);
 }

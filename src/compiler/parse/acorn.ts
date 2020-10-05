@@ -7,6 +7,13 @@ export const parse = (source: string): Node => code_red.parse(source, {
 	locations: true
 });
 
+export const parse_script = (source: string): Node => code_red.parse(source, {
+	sourceType: 'module',
+	ecmaVersion: 11,
+	locations: true,
+	allowAwaitOutsideFunction: true
+});
+
 export const parse_expression_at = (source: string, index: number): Node => code_red.parseExpressionAt(source, index, {
 	sourceType: 'module',
 	ecmaVersion: 12,

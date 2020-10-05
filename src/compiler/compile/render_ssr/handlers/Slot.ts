@@ -21,7 +21,7 @@ export default function(node: Slot, renderer: Renderer, options: RenderOptions &
 
 	renderer.add_expression(x`
 		#slots.${node.slot_name}
-			? #slots.${node.slot_name}(${slot_data})
+			? await #slots.${node.slot_name}(${slot_data})
 			: ${result}
 	`);
 

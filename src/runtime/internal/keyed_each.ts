@@ -21,7 +21,7 @@ export function fix_and_outro_and_destroy_block(block, lookup) {
 	outro_and_destroy_block(block, lookup);
 }
 
-export function update_keyed_each(old_blocks, dirty, get_key, dynamic, ctx, list, lookup, node, destroy, create_each_block, next, get_context) {
+export async function update_keyed_each(old_blocks, dirty, get_key, dynamic, ctx, list, lookup, node, destroy, create_each_block, next, get_context) {
 	let o = old_blocks.length;
 	let n = list.length;
 
@@ -40,10 +40,10 @@ export function update_keyed_each(old_blocks, dirty, get_key, dynamic, ctx, list
 		let block = lookup.get(key);
 
 		if (!block) {
-			block = create_each_block(key, child_ctx);
-			block.c();
+			block = await create_each_block(key, child_ctx);
+			await block.c();
 		} else if (dynamic) {
-			block.p(child_ctx, dirty);
+			await block.p(child_ctx, dirty);
 		}
 
 		new_lookup.set(key, new_blocks[i] = block);

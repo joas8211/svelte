@@ -418,7 +418,7 @@ export default class InlineComponentWrapper extends Wrapper {
 				}
 
 				if (${switch_value}) {
-					${name} = new ${switch_value}(${switch_props}(#ctx));
+					${name} = await ${switch_value}.init(${switch_props}(#ctx));
 
 					${munged_bindings}
 					${munged_handlers}
@@ -426,7 +426,7 @@ export default class InlineComponentWrapper extends Wrapper {
 			`);
 
 			block.chunks.create.push(
-				b`if (${name}) @create_component(${name}.$$.fragment);`
+				b`if (${name}) await @create_component(${name}.$$.fragment);`
 			);
 
 			if (parent_nodes && this.renderer.options.hydratable) {
@@ -462,19 +462,19 @@ export default class InlineComponentWrapper extends Wrapper {
 					}
 
 					if (${switch_value}) {
-						${name} = new ${switch_value}(${switch_props}(#ctx));
+						${name} = await ${switch_value}.init(${switch_props}(#ctx));
 
 						${munged_bindings}
 						${munged_handlers}
 
-						@create_component(${name}.$$.fragment);
+						await @create_component(${name}.$$.fragment);
 						@transition_in(${name}.$$.fragment, 1);
 						@mount_component(${name}, ${update_mount_node}, ${anchor});
 					} else {
 						${name} = null;
 					}
 				} else if (${switch_value}) {
-					${updates.length > 0 && b`${name}.$set(${name_changes});`}
+					${updates.length > 0 && b`await ${name}.$set(${name_changes});`}
 				}
 			`);
 
@@ -496,7 +496,7 @@ export default class InlineComponentWrapper extends Wrapper {
 				${(this.node.attributes.length > 0 || this.node.bindings.length > 0) && b`
 				${props && b`let ${props} = ${attribute_object};`}`}
 				${statements}
-				${name} = new ${expression}(${component_opts});
+				${name} = await ${expression}.init(${component_opts});
 
 				${munged_bindings}
 				${munged_handlers}
@@ -526,7 +526,7 @@ export default class InlineComponentWrapper extends Wrapper {
 					}
 				});
 			}
-			block.chunks.create.push(b`@create_component(${name}.$$.fragment);`);
+			block.chunks.create.push(b`await @create_component(${name}.$$.fragment);`);
 
 			if (parent_nodes && this.renderer.options.hydratable) {
 				let nodes = parent_nodes;

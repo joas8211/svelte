@@ -84,7 +84,7 @@ export default class KeyBlockWrapper extends Wrapper {
 		block.chunks.init.push(b`
 			let ${this.var} = ${this.block.name}(#ctx);
 		`);
-		block.chunks.create.push(b`${this.var}.c();`);
+		block.chunks.create.push(b`await ${this.var}.c();`);
 		if (this.renderer.options.hydratable) {
 			block.chunks.claim.push(b`${this.var}.l(${parent_nodes});`);
 		}
@@ -105,7 +105,7 @@ export default class KeyBlockWrapper extends Wrapper {
 					: b`${this.var}.d(1);`
 			}
 			${this.var} = ${this.block.name}(#ctx);
-			${this.var}.c();
+			await ${this.var}.c();
 			${has_transitions && b`@transition_in(${this.var})`}
 			${this.var}.m(${this.get_update_mount_node(anchor)}, ${anchor});
 		`;
@@ -115,7 +115,7 @@ export default class KeyBlockWrapper extends Wrapper {
 				if (${condition}) {
 					${body}
 				} else {
-					${this.var}.p(#ctx, #dirty);
+					await ${this.var}.p(#ctx, #dirty);
 				}
 			`);
 		} else {

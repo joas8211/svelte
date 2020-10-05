@@ -33,7 +33,7 @@ export function add_flush_callback(fn) {
 
 let flushing = false;
 const seen_callbacks = new Set();
-export function flush() {
+export async function flush() {
 	if (flushing) return;
 	flushing = true;
 
@@ -43,7 +43,7 @@ export function flush() {
 		for (let i = 0; i < dirty_components.length; i += 1) {
 			const component = dirty_components[i];
 			set_current_component(component);
-			update(component.$$);
+			await update(component.$$);
 		}
 		set_current_component(null);
 
@@ -77,13 +77,13 @@ export function flush() {
 	seen_callbacks.clear();
 }
 
-function update($$) {
+async function update($$) {
 	if ($$.fragment !== null) {
-		$$.update();
+		await $$.update();
 		run_all($$.before_update);
 		const dirty = $$.dirty;
 		$$.dirty = [-1];
-		$$.fragment && $$.fragment.p($$.ctx, dirty);
+		$$.fragment && await $$.fragment.p($$.ctx, dirty);
 
 		$$.after_update.forEach(add_render_callback);
 	}

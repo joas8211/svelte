@@ -202,11 +202,11 @@ export default class AwaitBlockWrapper extends Wrapper {
 		`);
 
 		block.chunks.init.push(b`
-			@handle_promise(${promise} = ${snippet}, ${info});
+			await @handle_promise(${promise} = ${snippet}, ${info});
 		`);
 
 		block.chunks.create.push(b`
-			${info}.block.c();
+			await ${info}.block.c();
 		`);
 
 		if (parent_nodes && this.renderer.options.hydratable) {
@@ -232,13 +232,13 @@ export default class AwaitBlockWrapper extends Wrapper {
 
 		const dependencies = this.node.expression.dynamic_dependencies();
 
-		const update_await_block_branch = b`@update_await_block_branch(${info}, #ctx, #dirty)`;
+		const update_await_block_branch = b`await @update_await_block_branch(${info}, #ctx, #dirty)`;
 
 		if (dependencies.length > 0) {
 			const condition = x`
 				${block.renderer.dirty(dependencies)} &&
 				${promise} !== (${promise} = ${snippet}) &&
-				@handle_promise(${promise}, ${info})`;
+				await @handle_promise(${promise}, ${info})`;
 
 			block.chunks.update.push(
 				b`${info}.ctx = #ctx;`

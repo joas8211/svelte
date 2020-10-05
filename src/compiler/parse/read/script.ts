@@ -46,7 +46,7 @@ export default function read_script(parser: Parser, start: number, attributes: N
 	let ast: Program;
 
 	try {
-		ast = acorn.parse(source) as any as Program;
+		ast = acorn.parse_script(source) as any as Program;
 	} catch (err) {
 		parser.acorn_error(err);
 	}
