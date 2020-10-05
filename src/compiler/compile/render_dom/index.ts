@@ -522,9 +522,9 @@ export default function dom(
 		const declaration = b`
 			class ${name} extends ${superclass} {
 				static async init(options) {
-					const instance = new ${name}();
-					await instance.init(options);
-					return instance;
+					const component = new ${name}();
+					await component.init(options);
+					return component;
 				}
 
 				async init(options) {
