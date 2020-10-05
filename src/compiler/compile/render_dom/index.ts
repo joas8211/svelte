@@ -528,7 +528,7 @@ export default function dom(
 				}
 
 				async init(options) {
-					${options.dev && b`super.init(${options.dev && `options`});`}
+					${options.dev && b`await @super.init(${options.dev && `options`});`}
 					${should_add_css && b`if (!@_document.getElementById("${component.stylesheet.id}-style")) ${add_css}();`}
 					await @init(this, options, ${definition}, ${has_create_fragment ? 'create_fragment': 'null'}, ${not_equal}, ${prop_indexes}, ${dirty});
 					${options.dev && b`@dispatch_dev("SvelteRegisterComponent", { component: this, tagName: "${name.name}", options, id: create_fragment.name });`}
