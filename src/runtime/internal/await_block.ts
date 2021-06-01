@@ -55,6 +55,12 @@ export async function handle_promise(promise, info) {
 	}
 
 	if (is_promise(promise)) {
+		// if we previously had a then/catch block, destroy it
+		if (info.current !== info.pending) {
+			await update(info.pending, 0);
+			return true;
+		}
+
 		const current_component = get_current_component();
 		promise.then(async value => {
 			set_current_component(current_component);
@@ -68,12 +74,6 @@ export async function handle_promise(promise, info) {
 				throw error;
 			}
 		});
-
-		// if we previously had a then/catch block, destroy it
-		if (info.current !== info.pending) {
-			await update(info.pending, 0);
-			return true;
-		}
 	} else {
 		if (info.current !== info.then) {
 			await update(info.then, 1, info.value, promise);
