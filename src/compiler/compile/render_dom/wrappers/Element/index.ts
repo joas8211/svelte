@@ -871,7 +871,7 @@ export default class ElementWrapper extends Wrapper {
 				snippet = name;
 				dependencies = new Set([name]);
 			}
-			const updater = b`@toggle_class(${this.var}, "${name}", ${snippet});`;
+			const updater = b`if (${this.var}) @toggle_class(${this.var}, "${name}", ${snippet});`;
 
 			block.chunks.hydrate.push(updater);
 
@@ -900,7 +900,7 @@ export default class ElementWrapper extends Wrapper {
 
 	add_manual_style_scoping(block) {
 		if (this.node.needs_manual_style_scoping) {
-			const updater = b`@toggle_class(${this.var}, "${this.node.component.stylesheet.id}", true);`;
+			const updater = b`if (${this.var}) @toggle_class(${this.var}, "${this.node.component.stylesheet.id}", true);`;
 			block.chunks.hydrate.push(updater);
 			block.chunks.update.push(updater);
 		}

@@ -544,7 +544,7 @@ export default class IfBlockWrapper extends Wrapper {
 					${name} = await ${branch.block.name}(#ctx);
 					await ${name}.c();
 					${has_transitions && b`@transition_in(${name}, 1);`}
-					${name}.m(${update_mount_node}, ${anchor});
+					if (${update_mount_node}) ${name}.m(${update_mount_node}, ${anchor});
 				}
 			`;
 
