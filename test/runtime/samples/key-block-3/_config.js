@@ -5,6 +5,7 @@ export default {
 		const div = target.querySelector('div');
 
 		component.value = 5;
+		await component.$tick();
 		assert.htmlEqual(target.innerHTML, '<div></div>');
 		assert.notStrictEqual(div, target.querySelector('div'));
 	}

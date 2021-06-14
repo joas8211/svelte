@@ -3,8 +3,9 @@ export default {
 		<b>Hello</b>
 	`,
 
-	test({ assert, component, target }) {
+	async test({ assert, component, target }) {
 		component.name = 'World';
+		await component.$tick();
 		assert.htmlEqual( target.innerHTML, `
 			<b>Hello</b> World
 		` );

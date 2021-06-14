@@ -15,13 +15,14 @@ export default {
 		<p>quux: core</p></div>
 	`,
 
-	test({ assert, component, target }) {
+	async test({ assert, component, target }) {
 		component.props = {
 			foo: 'wut',
 			baz: 40 + 3,
 			qux: `this is a ${'rather boring'} string`,
 			quux: 'heart'
 		};
+		await component.$tick();
 
 		assert.htmlEqual(target.innerHTML, `
 			<div><p>foo: wut</p>

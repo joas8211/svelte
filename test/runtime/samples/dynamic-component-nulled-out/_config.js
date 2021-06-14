@@ -3,14 +3,16 @@ export default {
 		<p>Foo</p>
 	`,
 
-	test({ assert, component, target }) {
+	async test({ assert, component, target }) {
 		const Bar = component.Bar;
 
 		component.Bar = null;
+		await component.$tick();
 
 		assert.htmlEqual(target.innerHTML, '');
 
 		component.Bar = Bar;
+		await component.$tick();
 
 		assert.htmlEqual(target.innerHTML, `
 			<p>Foo</p>

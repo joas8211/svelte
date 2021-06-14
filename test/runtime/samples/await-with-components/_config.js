@@ -5,6 +5,7 @@ export default {
 		let promise = new Promise(ok => resolve = ok);
 
 		component.promise = promise;
+		await component.$tick();
 		assert.htmlEqual(target.innerHTML, 'Loading...');
 
 		resolve(42);
@@ -13,6 +14,7 @@ export default {
 
 		promise = new Promise((ok, fail) => reject = fail);
 		component.promise = promise;
+		await component.$tick();
 		assert.htmlEqual(target.innerHTML, 'Loading...');
 
 		reject(99);
@@ -21,6 +23,7 @@ export default {
 
 		promise = new Promise(ok => resolve = ok);
 		component.promise = promise;
+		await component.$tick();
 		assert.htmlEqual(target.innerHTML, 'Loading...');
 
 		resolve(1);

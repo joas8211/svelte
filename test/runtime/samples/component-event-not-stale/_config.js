@@ -3,7 +3,7 @@ export default {
 		value: 1
 	},
 
-	test({ assert, component, target, window }) {
+	async test({ assert, component, target, window }) {
 		const buttons = target.querySelectorAll('button');
 		const click = new window.MouseEvent('click');
 
@@ -14,11 +14,13 @@ export default {
 
 		buttons[0].dispatchEvent(click);
 		buttons[1].dispatchEvent(click);
+		await component.$tick();
 
 		component.value = 2;
 
 		buttons[0].dispatchEvent(click);
 		buttons[1].dispatchEvent(click);
+		await component.$tick();
 
 		assert.deepEqual(events, [
 			{ value: 1 },

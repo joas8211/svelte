@@ -9,7 +9,7 @@ export default {
 		const button = target.querySelector('button');
 
 		await button.dispatchEvent(click);
-
+		await component.$tick();
 		assert.equal(component.x, undefined);
 		assert.htmlEqual(target.innerHTML, `
 			<button>1</button>
@@ -17,7 +17,7 @@ export default {
 		`);
 
 		await button.dispatchEvent(click);
-
+		await component.$tick();
 		assert.equal(component.x, undefined);
 		assert.htmlEqual(target.innerHTML, `
 			<button>2</button>

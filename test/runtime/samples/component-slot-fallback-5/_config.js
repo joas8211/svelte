@@ -4,12 +4,12 @@ export default {
 	<div>Icon B</div>
 	`,
 
-	async test({ assert, target, window }) {
+	async test({ assert, component, target, window }) {
 		const btn = target.querySelector('button');
 		const clickEvent = new window.MouseEvent('click');
 
 		await btn.dispatchEvent(clickEvent);
-
+		await component.$tick();
 		assert.htmlEqual(
 			target.innerHTML,
 			`
@@ -19,7 +19,7 @@ export default {
 		);
 
 		await btn.dispatchEvent(clickEvent);
-
+		await component.$tick();
 		assert.htmlEqual(
 			target.innerHTML,
 			`

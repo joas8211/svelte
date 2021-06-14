@@ -28,7 +28,7 @@ export default {
 		</div>
 	`,
 
-	test({ assert, component, target }) {
+	async test({ assert, component, target }) {
 		component.list = [{
 			foo: 'lol',
 			baz: 40 + 3,
@@ -40,6 +40,7 @@ export default {
 			qux: 8,
 			quux: 'heartxx'
 		}];
+		await component.$tick();
 
 		assert.htmlEqual(target.innerHTML, `
 			<div>
@@ -57,6 +58,7 @@ export default {
 		`);
 
 		component.qux = 1;
+		await component.$tick();
 
 		assert.htmlEqual(target.innerHTML, `
 			<div>

@@ -35,7 +35,7 @@ export default {
 
 		options[2].selected = true;
 		await select.dispatchEvent(change);
-
+		await component.$tick();
 		assert.equal(component.foo, 3);
 		assert.htmlEqual( target.innerHTML, `
 			<select>

@@ -23,6 +23,7 @@ export default {
 
 		select.options[2].selected = true;
 		await select.dispatchEvent(change);
+		await component.$tick();
 		assert.equal(component.letter, 'c');
 
 		assert.deepEqual(Array.from(select.options).map(o => o.selected), [

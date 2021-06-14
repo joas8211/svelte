@@ -13,6 +13,7 @@ export default {
 		const click = new window.MouseEvent('click');
 
 		await header.dispatchEvent(click);
+		await component.$tick();
 		assert.htmlEqual(target.innerHTML, `
 			<h1>Hello World!</h1>
 		`);

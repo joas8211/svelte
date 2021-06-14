@@ -7,10 +7,11 @@ export default {
 
 	html: '',
 
-	test({ assert, component, target }) {
+	async test({ assert, component, target }) {
 		component.props = {
 			a: 2
 		};
+		await component.$tick();
 
 		assert.htmlEqual(target.innerHTML, '');
 	}

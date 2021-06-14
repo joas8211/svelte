@@ -21,6 +21,7 @@ export default {
 		});
 
 		await button.dispatchEvent(event);
+		await component.$tick();
 		assert.equal(err, '', err);
 		assert.htmlEqual(target.innerHTML, `
 			<p>
@@ -32,7 +33,9 @@ export default {
 		`);
 
 		await updateButton1.dispatchEvent(event);
+		await component.$tick();
 		await button.dispatchEvent(event);
+		await component.$tick();
 		assert.htmlEqual(target.innerHTML, `
 			<p>
 				<button>set handler 1</button>
@@ -43,7 +46,9 @@ export default {
 		`);
 
 		await updateButton2.dispatchEvent(event);
+		await component.$tick();
 		await button.dispatchEvent(event);
+		await component.$tick();
 		assert.htmlEqual(target.innerHTML, `
 			<p>
 				<button>set handler 1</button>

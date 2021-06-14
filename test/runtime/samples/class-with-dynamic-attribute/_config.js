@@ -5,8 +5,9 @@ export default {
 
 	html: '<div class="one two three"></div>',
 
-	test({ assert, component, target, window }) {
+	async test({ assert, component, target, window }) {
 		component.myClass = 'one';
+		await component.$tick();
 
 		assert.htmlEqual(target.innerHTML, `
 			<div class="one three"></div>

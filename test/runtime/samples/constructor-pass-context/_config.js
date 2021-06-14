@@ -3,7 +3,7 @@ export default {
 		const Component = require('./Component.svelte').default;
 
 		const called = [];
-		const component = new Component({
+		const component = await Component.init({
 			target,
 			context: new Map([
 				['key', 'svelte'],
@@ -14,16 +14,16 @@ export default {
 
 		const button = target.querySelector('button');
 		await button.dispatchEvent(new window.MouseEvent('click'));
-
+		await component.$tick();
 		assert.deepEqual(called, ['hello world']);
 
 		component.$destroy();
 	},
-	test_ssr({ assert }) {
+	async test_ssr({ assert }) {
 		const Component = require('./Component.svelte').default;
 
 		const called = [];
-		const { html } = Component.render(undefined, { context: new Map([
+		const { html } = await Component.render(undefined, { context: new Map([
 			['key', 'svelte'],
 			['fn', (value) => called.push(value)]
 		]) });

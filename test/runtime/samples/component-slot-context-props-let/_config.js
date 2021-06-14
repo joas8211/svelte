@@ -8,9 +8,11 @@ export default {
 		const click = new window.MouseEvent('click');
 
 		await btn1.dispatchEvent(click);
+		await component.$tick();
 		assert.deepEqual(component.log, ['setKey(a, value-a)']);
 
 		await btn2.dispatchEvent(click);
+		await component.$tick();
 		assert.deepEqual(component.log, [
 			'setKey(a, value-a)',
 			'setKey(b, value-b)'

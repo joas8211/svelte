@@ -13,11 +13,12 @@ export default {
 		<p>quux: core</p></div>
 	`,
 
-	test({ assert, component, target }) {
+	async test({ assert, component, target }) {
 		component.bar = 'wut';
 		component.x = 3;
 		component.compound = 'rather boring';
 		component.go = { deeper: 'heart' };
+		await component.$tick();
 
 		assert.htmlEqual(target.innerHTML, `
 			<div><p>foo: wut</p>

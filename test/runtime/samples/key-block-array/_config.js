@@ -9,6 +9,7 @@ export default {
 		div = target.querySelector('div');
 
 		component.array = [3, 4];
+		await component.$tick();
 		assert.htmlEqual(target.innerHTML, '<div>3,4</div>');
 		assert.notStrictEqual(div, target.querySelector('div'));
 	}

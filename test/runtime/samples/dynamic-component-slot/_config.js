@@ -16,8 +16,9 @@ export default {
 		<div>baz</div>
 	`,
 
-	test({ assert, component, target }) {
+	async test({ assert, component, target }) {
 		component.x = false;
+		await component.$tick();
 
 		assert.htmlEqual(target.innerHTML, `
 			<h1>Bar</h1>

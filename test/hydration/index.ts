@@ -48,7 +48,7 @@ describe('hydration', () => {
 			throw new Error('Forgot to remove `solo: true` from test');
 		}
 
-		(config.skip ? it.skip : solo ? it.only : it)(dir, () => {
+		(config.skip ? it.skip : solo ? it.only : it)(dir, async () => {
 			const cwd = path.resolve(`${__dirname}/samples/${dir}`);
 
 			compileOptions = config.compileOptions || {};
@@ -75,7 +75,7 @@ describe('hydration', () => {
 
 				const snapshot = config.snapshot ? config.snapshot(target) : {};
 
-				const component = new SvelteComponent({
+				const component = await SvelteComponent.init({
 					target,
 					hydrate: true,
 					props: config.props
@@ -106,7 +106,7 @@ describe('hydration', () => {
 				}
 
 				if (config.test) {
-					config.test(assert, target, snapshot, component, window);
+					await config.test(assert, target, snapshot, component, window);
 				} else {
 					component.$destroy();
 					assert.equal(target.innerHTML, '');

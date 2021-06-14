@@ -9,13 +9,16 @@ export default {
 
 		input1.value = 'a';
 		await input1.dispatchEvent(new window.Event('input'));
+		await component.$tick();
 		input1.value = 'ab';
 		await input1.dispatchEvent(new window.Event('input'));
+		await component.$tick();
 		assert.equal(input1.value, 'ab');
 		assert.equal(input2.value, 'ab');
 		assert.equal(inputFallback.value, 'ab');
 
 		component.props = 'hello';
+		await component.$tick();
 
 		assert.htmlEqual(
 			target.innerHTML,
@@ -27,6 +30,7 @@ export default {
 		);
 
 		component.fallback = 'world';
+		await component.$tick();
 		assert.htmlEqual(
 			target.innerHTML,
 			`

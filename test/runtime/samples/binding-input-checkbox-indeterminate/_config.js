@@ -21,7 +21,7 @@ export default {
 		input.checked = true;
 		input.indeterminate = false;
 		await input.dispatchEvent(event);
-
+		await component.$tick();
 		assert.equal(component.indeterminate, false);
 		assert.equal(component.checked, true);
 		assert.htmlEqual(target.innerHTML, `
@@ -31,6 +31,7 @@ export default {
 		`);
 
 		component.indeterminate = true;
+		await component.$tick();
 		assert.equal(input.indeterminate, true);
 		assert.equal(input.checked, true);
 		assert.htmlEqual(target.innerHTML, `

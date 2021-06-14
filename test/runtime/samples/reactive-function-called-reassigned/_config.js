@@ -17,7 +17,7 @@ export default {
 		const event = new window.Event('input');
 		input.value = 'h';
 		await input.dispatchEvent(event);
-
+		await component.$tick();
 		assert.equal(called, 2);
 		assert.equal(value.length, 3);
 		assert.equal(value[0], 'h');

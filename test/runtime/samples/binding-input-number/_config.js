@@ -21,7 +21,7 @@ export default {
 
 		input.value = '43';
 		await input.dispatchEvent(event);
-
+		await component.$tick();
 		assert.equal(component.count, 43);
 		assert.htmlEqual(target.innerHTML, `
 			<input type='number'>
@@ -29,6 +29,7 @@ export default {
 		`);
 
 		component.count = 44;
+		await component.$tick();
 		assert.equal(input.value, '44');
 		assert.htmlEqual(target.innerHTML, `
 			<input type='number'>
@@ -38,7 +39,7 @@ export default {
 		// empty string should be treated as null
 		input.value = '';
 		await input.dispatchEvent(event);
-
+		await component.$tick();
 		assert.equal(component.count, null);
 		assert.htmlEqual(target.innerHTML, `
 			<input type='number'>

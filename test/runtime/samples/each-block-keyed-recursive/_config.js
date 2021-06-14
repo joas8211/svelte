@@ -11,11 +11,12 @@ export default {
 		<div>2\n<div>11</div></div>
 	`,
 
-	test({ assert, component, target }) {
+	async test({ assert, component, target }) {
 		component.tree = [
 			{id: 1, sub: null},
 			{id: 2, sub: null}
 		];
+		await component.$tick();
 
 		assert.htmlEqual(target.innerHTML, `
 			<div>1</div>

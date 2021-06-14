@@ -21,6 +21,7 @@ export default {
 		);
 
 		component.count = 5;
+		await component.$tick();
 
 		assert.htmlEqual(
 			target.innerHTML,
@@ -47,6 +48,7 @@ export default {
 		);
 
 		component.count = 10;
+		await component.$tick();
 
 		assert.htmlEqual(
 			target.innerHTML,

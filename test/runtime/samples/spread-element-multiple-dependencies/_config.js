@@ -1,7 +1,8 @@
 export default {
 	html: "<div class='b' title='baz'></div>",
-	test({ assert, component, target }) {
+	async test({ assert, component, target }) {
 		component.foo = true;
+		await component.$tick();
 		assert.htmlEqual(
 			target.innerHTML,
 			"<div class='a' title='baz'></div>"

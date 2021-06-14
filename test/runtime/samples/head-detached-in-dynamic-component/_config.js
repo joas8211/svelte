@@ -3,8 +3,9 @@ export default {
 		A
 	`,
 
-	test({ assert, component, window }) {
+	async test({ assert, component, window }) {
 		component.x = false;
+		await component.$tick();
 
 		const meta = window.document.querySelectorAll('meta');
 

@@ -3,10 +3,11 @@ export default {
 		foo: 'A Title'
 	},
 
-	test({ assert, component, target, window }) {
+	async test({ assert, component, target, window }) {
 		assert.equal(window.document.title, 'A Title');
 
 		component.foo = 'Also A Title';
+		await component.$tick();
 		assert.equal(window.document.title, 'Also A Title');
 	}
 };

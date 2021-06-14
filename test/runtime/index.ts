@@ -61,7 +61,7 @@ describe('runtime', () => {
 			throw new Error('Forgot to remove `solo: true` from test');
 		}
 
-		(config.skip ? it.skip : solo ? it.only : it)(`${dir} ${hydrate ? '(with hydration)' : ''}`, () => {
+		return (config.skip ? it.skip : solo ? it.only : it)(`${dir} ${hydrate ? '(with hydration)' : ''}`, async () => {
 			if (failed.has(dir)) {
 				// this makes debugging easier, by only printing compiled output once
 				throw new Error('skipping test, already failed');
@@ -89,6 +89,7 @@ describe('runtime', () => {
 
 			const window = env();
 
+			await new Promise<void>(resolve => {
 			glob('**/*.svelte', { cwd }).forEach(file => {
 				if (file[0] === '_') return;
 
@@ -116,8 +117,11 @@ describe('runtime', () => {
 				}
 			});
 
+				resolve();
+			});
+
 			return Promise.resolve()
-				.then(() => {
+				.then(async () => {
 					// hack to support transition tests
 					clear_loops();
 
@@ -166,8 +170,7 @@ describe('runtime', () => {
 						intro: config.intro
 					}, config.options || {});
 
-					const component = new SvelteComponent(options);
-
+					const component = await SvelteComponent.init(options);
 					console.warn = warn;
 
 					if (config.error) {
@@ -187,7 +190,7 @@ describe('runtime', () => {
 					}
 
 					if (config.test) {
-						return Promise.resolve(config.test({
+						await config.test({
 							assert,
 							component,
 							mod,
@@ -195,13 +198,13 @@ describe('runtime', () => {
 							window,
 							raf,
 							compileOptions
-						})).then(() => {
+						});
+
 							component.$destroy();
 
 							if (unhandled_rejection) {
 								throw unhandled_rejection;
 							}
-						});
 					} else {
 						component.$destroy();
 						assert.htmlEqual(target.innerHTML, '');
@@ -231,12 +234,12 @@ describe('runtime', () => {
 					err.stack += `\n\ncmd-click: ${path.relative(process.cwd(), cwd)}/main.svelte`;
 					throw err;
 				})
-				.then(() => {
+				.then(async () => {
 					if (config.show) {
 						showOutput(cwd, compileOptions, compile);
 					}
 
-					flush();
+					await flush();
 
 					if (config.after_test) config.after_test();
 				});
@@ -285,19 +288,25 @@ describe('runtime', () => {
 	it('fails if options.target is missing in dev mode', async () => {
 		const App = await create_component();
 
-		assert.throws(() => {
-			new App();
-		}, /'target' is a required option/);
+		return App.init()
+			.catch(err => Promise.resolve(err))
+			.then(err => {
+				assert.ok(err instanceof Error);
+				assert.equal(err.message, '\'target\' is a required option');
+			});
 	});
 
 	it('fails if options.hydrate is true but the component is non-hydratable', async () => {
 		const App = await create_component();
 
-		assert.throws(() => {
-			new App({
+		return App.init({
 				target: { childNodes: [] },
 				hydrate: true
+		})
+			.catch(err => Promise.resolve(err))
+			.then(err => {
+				assert.ok(err instanceof Error);
+				assert.equal(err.message, 'options.hydrate only works if the component was compiled with the `hydratable: true` option');
 			});
-		}, /options.hydrate only works if the component was compiled with the `hydratable: true` option/);
 	});
 });

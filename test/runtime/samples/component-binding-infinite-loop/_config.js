@@ -30,7 +30,7 @@ export default {
 		const spans = target.querySelectorAll('span');
 
 		await spans[0].dispatchEvent(click);
-
+		await component.$tick();
 		assert.equal(component.currentIdentifier, 1);
 		assert.htmlEqual(target.innerHTML, `
 			<p><span class='selected'>1</span></p>
@@ -59,7 +59,7 @@ export default {
 		`);
 
 		await spans[0].dispatchEvent(click);
-
+		await component.$tick();
 		assert.equal(component.currentIdentifier, null);
 		assert.htmlEqual(target.innerHTML, `
 			<p><span class=''>1</span></p>

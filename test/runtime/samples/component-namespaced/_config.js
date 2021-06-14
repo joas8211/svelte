@@ -13,8 +13,9 @@ export default {
 		delete require.cache[path.resolve(__dirname, 'components.js')];
 	},
 
-	test({ assert, component, target }) {
+	async test({ assert, component, target }) {
 		component.a = 2;
+		await component.$tick();
 		assert.htmlEqual(target.innerHTML, `
 			<p>foo 2</p>
 		`);

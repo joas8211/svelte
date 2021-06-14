@@ -11,8 +11,9 @@ export default {
 		<a href="x#c">x#c</a>
 	`,
 
-	test({ assert, component, target }) {
+	async test({ assert, component, target }) {
 		component.links = ['d', 'e', 'f'];
+		await component.$tick();
 
 		const links = [...target.querySelectorAll('a')];
 		assert.deepEqual(links.map(l => l.href), ['x#d', 'x#e', 'x#f']);

@@ -5,10 +5,12 @@ export default {
 
 	html: '(alpaca)(baboon)(capybara)',
 
-	test({ assert, component, target }) {
+	async test({ assert, component, target }) {
 		component.animals = [ 'caribou', 'dogfish' ];
+		await component.$tick();
 		assert.htmlEqual( target.innerHTML, '(caribou)(dogfish)' );
 		component.animals = [];
+		await component.$tick();
 		assert.htmlEqual( target.innerHTML, '' );
 	}
 };

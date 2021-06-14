@@ -8,18 +8,21 @@ export default {
 		bar
 	},
 
-	test({ assert, component, window }) {
+	async test({ assert, component, window }) {
 		assert.equal(window.document.head.innerHTML.includes(foo), true);
 
 		component.condition = false;
+		await component.$tick();
 		assert.equal(window.document.head.innerHTML.includes(foo), false);
 
 		component.condition = 2;
+		await component.$tick();
 		assert.equal(window.document.title, 'bar!!!');
 		assert.equal(window.document.head.innerHTML.includes(bar), true);
 		assert.equal(Boolean(window.document.getElementById('meta')), true);
 
 		component.condition = false;
+		await component.$tick();
 		assert.equal(window.document.head.innerHTML.includes(bar), false);
 		assert.equal(window.document.getElementById('meta'), null);
 	}

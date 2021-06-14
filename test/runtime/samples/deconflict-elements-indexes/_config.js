@@ -7,10 +7,11 @@ export default {
 
 	preserveIdentifiers: true,
 
-	test({ assert, component, target }) {
+	async test({ assert, component, target }) {
 		const { tagList } = component;
 		tagList.push('two');
 		component.tagList = tagList;
+		await component.$tick();
 
 		assert.htmlEqual(target.innerHTML, `
 			<div>

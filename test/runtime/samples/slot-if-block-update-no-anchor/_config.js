@@ -1,7 +1,8 @@
 export default {
-	test({ assert, target, component }) {
+	async test({ assert, target, component }) {
 		assert.htmlEqual(target.innerHTML, '<span></span>');
 		component.enabled = true;
+		await component.$tick();
 		assert.htmlEqual(target.innerHTML, '<span>enabled</span>');
 	}
 };

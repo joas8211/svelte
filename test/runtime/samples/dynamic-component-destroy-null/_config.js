@@ -3,7 +3,8 @@ export default {
 		x: true
 	},
 
-	test({ assert, component }) {
+	async test({ assert, component }) {
 		component.x = false;
+		await component.$tick();
 	}
 };

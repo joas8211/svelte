@@ -20,7 +20,7 @@ export default {
 
 		inputs[1].value = 'Oz';
 		await inputs[1].dispatchEvent(new window.Event('input'));
-
+		await component.$tick();
 		const { people } = component;
 
 		assert.deepEqual(people, [
@@ -35,6 +35,7 @@ export default {
 
 		people[0].name.first = 'Frank';
 		component.people = people;
+		await component.$tick();
 
 		assert.htmlEqual(target.innerHTML, `
 			<input>

@@ -11,11 +11,12 @@ export default {
 		<input type='checkbox'>
 	`,
 
-	test({ assert, component, target }) {
+	async test({ assert, component, target }) {
 		const input = target.querySelector('input');
 
 		assert.ok(input.indeterminate);
 		component.indeterminate = false;
+		await component.$tick();
 		assert.ok(!input.indeterminate);
 	}
 };

@@ -6,8 +6,9 @@ export default {
 		</div>
 	`,
 
-	test({ assert, component, target }) {
+	async test({ assert, component, target }) {
 		component.dynamic += 1;
+		await component.$tick();
 
 		assert.htmlEqual(target.innerHTML, `
 			<div>

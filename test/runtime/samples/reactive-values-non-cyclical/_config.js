@@ -7,8 +7,9 @@ export default {
 		<p>42 42</p>
 	`,
 
-	test({ assert, component, target }) {
+	async test({ assert, component, target }) {
 		component.x = 43;
+		await component.$tick();
 
 		assert.htmlEqual(target.innerHTML, `
 			<p>43 43</p>

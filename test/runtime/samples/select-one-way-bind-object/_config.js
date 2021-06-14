@@ -8,13 +8,14 @@ export default {
 		items
 	},
 
-	test({ assert, component, target }) {
+	async test({ assert, component, target }) {
 		const options = target.querySelectorAll( 'option' );
 
 		assert.equal( options[0].selected, true );
 		assert.equal( options[1].selected, false );
 
 		component.foo = items[1];
+		await component.$tick();
 
 		assert.equal( options[0].selected, false );
 		assert.equal( options[1].selected, true );

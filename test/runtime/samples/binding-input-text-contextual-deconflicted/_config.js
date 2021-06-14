@@ -23,8 +23,9 @@ export default {
 		inputs[0].value = 'b';
 		inputs[1].value = 'y';
 		await inputs[0].dispatchEvent(event);
+		await component.$tick();
 		await inputs[1].dispatchEvent(event);
-
+		await component.$tick();
 		assert.equal(component.foo, 'b');
 		assert.equal(component.items[0], 'y');
 

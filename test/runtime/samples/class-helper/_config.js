@@ -5,8 +5,9 @@ export default {
 
 	html: '<div class="active"></div>',
 
-	test({ assert, component, target }) {
+	async test({ assert, component, target }) {
 		component.user = { active: false };
+		await component.$tick();
 
 		assert.htmlEqual(target.innerHTML, `
 			<div class></div>

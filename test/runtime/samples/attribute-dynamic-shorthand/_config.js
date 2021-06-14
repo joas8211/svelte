@@ -1,8 +1,9 @@
 export default {
 	html: '<div id="foo"></div>',
 
-	test({ assert, component, target }) {
+	async test({ assert, component, target }) {
 		component.id = 'bar';
+		await component.$tick();
 		assert.equal( target.innerHTML, '<div id="bar"></div>' );
 	}
 };

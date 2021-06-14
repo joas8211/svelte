@@ -5,6 +5,7 @@ export default {
 	`,
 	async test({ assert, target, component, window }) {
 		component.x = 2;
+		await component.$tick();
 
 		assert.htmlEqual(target.innerHTML, `
 			<span slot="foo" class="2">2</span>
@@ -13,7 +14,7 @@ export default {
 
 		const span = target.querySelector('span');
 		await span.dispatchEvent(new window.MouseEvent('click'));
-
+		await component.$tick();
 		assert.htmlEqual(target.innerHTML, `
 			<span slot="foo" class="2">2</span>
 			2

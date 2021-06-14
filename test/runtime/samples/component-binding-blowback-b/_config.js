@@ -19,7 +19,7 @@ export default {
 
 		input.value = 4;
 		await input.dispatchEvent(new window.Event('input'));
-
+		await component.$tick();
 		assert.htmlEqual(target.innerHTML, `
 			<input type='number'>
 			<ol>

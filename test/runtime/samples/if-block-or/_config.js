@@ -6,10 +6,12 @@ export default {
 
 	html: '<p>i am visible</p>',
 
-	test({ assert, component, target }) {
+	async test({ assert, component, target }) {
 		component.a = false;
+		await component.$tick();
 		assert.htmlEqual( target.innerHTML, '' );
 		component.b = true;
+		await component.$tick();
 		assert.htmlEqual( target.innerHTML, '<p>i am visible</p>' );
 	}
 };

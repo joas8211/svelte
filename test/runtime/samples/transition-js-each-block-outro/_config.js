@@ -3,10 +3,11 @@ export default {
 		things: [ 'a', 'b', 'c' ]
 	},
 
-	test({ assert, component, target, window, raf }) {
+	async test({ assert, component, target, window, raf }) {
 		const divs = target.querySelectorAll( 'div' );
 
 		component.things = [ 'a' ];
+		await component.$tick();
 
 		raf.tick( 50 );
 		assert.equal( divs[0].foo, undefined );

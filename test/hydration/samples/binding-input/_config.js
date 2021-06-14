@@ -3,6 +3,10 @@ export default {
 		name: 'world'
 	},
 
+	compileOptions: {
+		accessors: true
+	},
+
 	snapshot(target) {
 		return {
 			input: target.querySelector('input'),
@@ -19,6 +23,7 @@ export default {
 
 		input.value = 'everybody';
 		await input.dispatchEvent(new window.Event('input'));
+		await component.$tick();
 
 		assert.equal(component.name, 'everybody');
 		assert.htmlEqual(target.innerHTML, `

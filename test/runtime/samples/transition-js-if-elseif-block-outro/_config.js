@@ -4,11 +4,12 @@ export default {
 		y: true
 	},
 
-	test({ assert, component, target, window, raf }) {
+	async test({ assert, component, target, window, raf }) {
 		assert.equal(target.querySelector('div'), component.no);
 
 		component.x = true;
 		component.y = false;
+		await component.$tick();
 
 		raf.tick(25);
 		assert.equal(component.yes.foo, undefined);

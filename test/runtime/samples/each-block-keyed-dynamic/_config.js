@@ -11,13 +11,14 @@ export default {
 		<p>drink milk</p>
 	`,
 
-	test({ assert, component, target }) {
+	async test({ assert, component, target }) {
 		const [ p1, p2 ] = target.querySelectorAll('p');
 
 		component.todos = [
 			{ id: 123, description: 'buy beer' },
 			{ id: 234, description: 'drink beer' }
 		];
+		await component.$tick();
 		assert.htmlEqual(target.innerHTML, `
 			<p>buy beer</p>
 			<p>drink beer</p>

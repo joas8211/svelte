@@ -11,8 +11,9 @@ export default {
 		<input type=text value=x>
 	`,
 
-	test({ assert, component, target }) {
+	async test({ assert, component, target }) {
 		component.x = 'y';
+		await component.$tick();
 		assert.htmlEqual(target.innerHTML, `
 			<div>A wild component appears</div>
 			<p>y</p>

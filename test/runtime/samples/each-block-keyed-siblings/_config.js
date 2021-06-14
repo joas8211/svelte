@@ -9,8 +9,9 @@ export default {
 		<div>2</div>
 	`,
 
-	test({ assert, component, target }) {
+	async test({ assert, component, target }) {
 		component.ones = [{ text: '11' }];
+		await component.$tick();
 
 		assert.htmlEqual(target.innerHTML, `
 			<div>11</div>

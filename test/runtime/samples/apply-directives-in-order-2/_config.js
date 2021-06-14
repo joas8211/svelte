@@ -12,6 +12,7 @@ export default {
 		for (const input of inputs) {
 			input.value = 'h';
 			await input.dispatchEvent(event);
+			await component.$tick();
 		}
 
 		assert.deepEqual(value, [

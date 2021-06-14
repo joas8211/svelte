@@ -36,6 +36,7 @@ export default {
 
 		inputs[1].checked = true;
 		await inputs[1].dispatchEvent(change);
+		await component.$tick();
 
 		assert.htmlEqual(target.innerHTML, `
 			<label>

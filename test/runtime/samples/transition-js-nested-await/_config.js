@@ -10,8 +10,9 @@ export default {
 		promise
 	},
 
-	test({ assert, component, target, window, raf }) {
+	async test({ assert, component, target, window, raf }) {
 		component.x = true;
+		await component.$tick();
 		fulfil();
 
 		return promise.then(() => {

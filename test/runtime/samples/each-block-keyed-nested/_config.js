@@ -3,13 +3,14 @@ export default {
 		1
 	`,
 
-	test({ assert, component, target }) {
+	async test({ assert, component, target }) {
 		component.desks = [
 			{
 				id: 1,
 				teams: []
 			}
 		];
+		await component.$tick();
 
 		assert.htmlEqual(target.innerHTML, '');
 	}

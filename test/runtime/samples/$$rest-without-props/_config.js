@@ -11,12 +11,12 @@ export default {
 		<div d="4" e="5" foo="1"></div>
 		<button></button><button></button><button></button><button></button>
 	`,
-	async test({ assert, target, window }) {
+	async test({ assert, component, target, window }) {
 		const [btn1, btn2, btn3, btn4] = target.querySelectorAll('button');
 		const clickEvent = new window.MouseEvent('click');
 
 		await btn1.dispatchEvent(clickEvent);
-		
+		await component.$tick();
 		assert.htmlEqual(target.innerHTML, `
 			<div>Length: 3</div>
 			<div>Values: 4,5,1</div>
@@ -25,7 +25,7 @@ export default {
 		`);
 
 		await btn2.dispatchEvent(clickEvent);
-		
+		await component.$tick();
 		assert.htmlEqual(target.innerHTML, `
 			<div>Length: 3</div>
 			<div>Values: 34,5,1</div>
@@ -34,7 +34,7 @@ export default {
 		`);
 
 		await btn3.dispatchEvent(clickEvent);
-		
+		await component.$tick();
 		assert.htmlEqual(target.innerHTML, `
 			<div>Length: 3</div>
 			<div>Values: 34,5,31</div>
@@ -43,7 +43,7 @@ export default {
 		`);
 
 		await btn4.dispatchEvent(clickEvent);
-		
+		await component.$tick();
 		assert.htmlEqual(target.innerHTML, `
 			<div>Length: 4</div>
 			<div>Values: 34,5,31,2</div>

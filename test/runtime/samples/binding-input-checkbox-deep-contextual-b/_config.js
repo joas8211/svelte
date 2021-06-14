@@ -30,7 +30,7 @@ export default {
 
 		inputs[1].checked = true;
 		await inputs[1].dispatchEvent(event);
-
+		await component.$tick();
 		await component.clear();
 
 		assert.htmlEqual(target.innerHTML, `
@@ -40,7 +40,7 @@ export default {
 
 		inputs[1].checked = true;
 		await inputs[1].dispatchEvent(event);
-
+		await component.$tick();
 		await component.clear();
 
 		assert.htmlEqual(target.innerHTML, `

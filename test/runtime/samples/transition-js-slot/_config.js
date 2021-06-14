@@ -7,8 +7,10 @@ export default {
 		<div></div>
 	`,
 
-	test({ assert, component, target, window, raf }) {
+	async test({ assert, component, target, window, raf }) {
 		component.visible = true;
+		await component.$tick();
+
 		const p = target.querySelector('p');
 		assert.equal(p.foo, 0);
 
@@ -16,6 +18,7 @@ export default {
 		assert.equal(p.foo, 0.5);
 
 		component.visible = false;
+		await component.$tick();
 
 		raf.tick(75);
 		assert.equal(p.foo, 0.25);

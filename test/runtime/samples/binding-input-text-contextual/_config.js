@@ -36,7 +36,7 @@ export default {
 
 		inputs[1].value = 'four';
 		await inputs[1].dispatchEvent(event);
-
+		await component.$tick();
 		assert.equal(items[1], 'four');
 		assert.htmlEqual(target.innerHTML, `
 			<div>
@@ -53,6 +53,7 @@ export default {
 		items[2] = 'five';
 
 		component.items = items;
+		await component.$tick();
 		assert.equal(inputs[2].value, 'five');
 		assert.htmlEqual(target.innerHTML, `
 			<div>

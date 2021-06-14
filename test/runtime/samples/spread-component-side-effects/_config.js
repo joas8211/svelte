@@ -7,8 +7,9 @@ export default {
 		<p>qux: named</p>
 	`,
 
-	test({ assert, component, target }) {
+	async test({ assert, component, target }) {
 		component.foo = 'lol';
+		await component.$tick();
 
 		assert.htmlEqual(target.innerHTML, `
 			<div><p>i: 2</p>

@@ -13,8 +13,9 @@ export default {
 		</li>
 	`,
 
-	test({ assert, component, target }) {
+	async test({ assert, component, target }) {
 		component.folder.open = false;
+		await component.$tick();
 		assert.htmlEqual(target.innerHTML, `
 			<li>
 				<span>a</span>

@@ -22,7 +22,7 @@ export default {
 		</ul>
 	`,
 
-	test({ assert, component, target }) {
+	async test({ assert, component, target }) {
 		component.states = [
 			'Maine',
 			'Maryland',
@@ -33,6 +33,7 @@ export default {
 			'Missouri',
 			'Montana'
 		];
+		await component.$tick();
 
 		assert.htmlEqual( target.innerHTML, `
 			<p>Current state: deconflicted</p>

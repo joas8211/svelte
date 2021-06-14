@@ -4,13 +4,15 @@ export default {
 		y: true
 	},
 
-	test({ assert, component, target, window, raf }) {
+	async test({ assert, component, target, window, raf }) {
 		component.x = true;
+		await component.$tick();
 
 		let div = target.querySelector('div');
 		assert.equal(div.foo, undefined);
 
 		component.y = false;
+		await component.$tick();
 		assert.htmlEqual(target.innerHTML, '<div></div>');
 		div = target.querySelector('div');
 
@@ -22,13 +24,16 @@ export default {
 
 		component.x = false;
 		component.y = true;
+		await component.$tick();
 		assert.htmlEqual(target.innerHTML, '');
 
 		component.x = true;
+		await component.$tick();
 		assert.htmlEqual(target.innerHTML, '<div></div>');
 		div = target.querySelector('div');
 
 		component.y = false;
+		await component.$tick();
 		assert.htmlEqual(target.innerHTML, '<div></div>');
 
 		raf.tick(120);

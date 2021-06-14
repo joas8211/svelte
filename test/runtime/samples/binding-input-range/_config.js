@@ -21,7 +21,7 @@ export default {
 
 		input.value = '43';
 		await input.dispatchEvent(event);
-
+		await component.$tick();
 		assert.equal(component.count, 43);
 		assert.htmlEqual(target.innerHTML, `
 			<input type='range'>
@@ -29,6 +29,7 @@ export default {
 		`);
 
 		component.count = 44;
+		await component.$tick();
 		assert.equal(input.value, '44');
 		assert.htmlEqual(target.innerHTML, `
 			<input type='range'>

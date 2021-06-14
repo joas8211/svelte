@@ -10,7 +10,7 @@ export default {
 		const event = new window.MouseEvent('click');
 
 		await button.dispatchEvent(event);
-
+		await component.$tick();
 		assert.ok(!component.inner_clicked);
 	}
 };

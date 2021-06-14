@@ -12,7 +12,7 @@ export default {
 		});
 
 		await button.dispatchEvent(event);
-
+		await component.$tick();
 		assert.ok(component.inner_clicked);
 		assert.ok(!component.outer_clicked);
 	}

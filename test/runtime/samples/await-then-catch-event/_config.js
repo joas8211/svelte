@@ -25,6 +25,7 @@ export default {
 
 				const click = new window.MouseEvent('click');
 				button.dispatchEvent(click);
+				await component.$tick();
 
 				assert.equal(component.clicked, 42);
 
@@ -33,11 +34,12 @@ export default {
 
 				return thePromise;
 			})
-			.then(() => {
+			.then(async () => {
 				const { button } = component;
 
 				const click = new window.MouseEvent('click');
 				button.dispatchEvent(click);
+				await component.$tick();
 
 				assert.equal(component.clicked, 43);
 			});

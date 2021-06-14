@@ -18,18 +18,20 @@ export default {
 		fulfil(42);
 
 		return thePromise
-			.then(() => {
+			.then(async () => {
 				assert.htmlEqual(target.innerHTML, `
 					<p>the value is 42</p>
 				`);
 
 				component.show = false;
+				await component.$tick();
 
 				assert.htmlEqual(target.innerHTML, `
 					<p>Else</p>
 				`);
 
 				component.show = true;
+				await component.$tick();
 
 				return thePromise.then(() => {
 					assert.htmlEqual(target.innerHTML, `

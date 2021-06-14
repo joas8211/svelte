@@ -10,8 +10,9 @@ export default {
 		<p>hello!</p>
 	`,
 
-	test({ assert, component, target }) {
+	async test({ assert, component, target }) {
 		component.value = 'goodbye!';
+		await component.$tick();
 		assert.htmlEqual(target.innerHTML, `
 			<p>goodbye!</p>
 			<p>goodbye!</p>

@@ -3,7 +3,7 @@ export default {
 		<p class="svelte-y94hdy" style="color: red !important; font-size: 20px !important; opacity: 1;">red</p>
 	`,
 
-	test({ assert, component, target, window }) {
+	async test({ assert, component, target, window }) {
 		const p = target.querySelector('p');
 
 		let styles = window.getComputedStyle(p);
@@ -11,6 +11,7 @@ export default {
 		assert.equal(styles.fontSize, '20px');
 
 		component.color = 'green';
+		await component.$tick();
 
 		styles = window.getComputedStyle(p);
 		assert.equal(styles.color, 'green');

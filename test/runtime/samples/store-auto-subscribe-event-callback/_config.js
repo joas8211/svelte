@@ -5,13 +5,14 @@ export default {
 	Valid: false
 	`,
 
-	async test({ assert, target, window }) {
+	async test({ assert, component, target, window }) {
 		const input = target.querySelector('input');
 
 		input.value = 'foo';
 		const inputEvent = new window.InputEvent('input');
 
 		await input.dispatchEvent(inputEvent);
+		await component.$tick();
 
 		assert.htmlEqual(target.innerHTML, `
 		<input class="input" placeholder="Type here" type="text">

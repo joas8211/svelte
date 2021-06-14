@@ -9,8 +9,9 @@ export default {
 		<p>capybara</p>
 	`,
 
-	test({ assert, component, target }) {
+	async test({ assert, component, target }) {
 		component.animals = [ 'alpaca', 'baboon', 'caribou', 'dogfish' ];
+		await component.$tick();
 		assert.htmlEqual( target.innerHTML, `
 			<p>alpaca</p>
 			<p>baboon</p>
@@ -19,6 +20,7 @@ export default {
 		` );
 
 		component.animals = [];
+		await component.$tick();
 		assert.htmlEqual( target.innerHTML, '' );
 	}
 };

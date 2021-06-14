@@ -8,9 +8,11 @@ export default {
 		const event = new window.MouseEvent('click');
 
 		await button.dispatchEvent(event);
+		await component.$tick();
 		assert.equal(component.count, 1);
 
 		await button.dispatchEvent(event);
+		await component.$tick();
 		assert.equal(component.count, 1);
 	}
 };

@@ -1,7 +1,7 @@
 export default {
 	html: '<input>',
 
-	test({ assert, component, target, window }) {
+	async test({ assert, component, target, window }) {
 		const input = target.querySelector('input');
 		const event = new window.KeyboardEvent('keydown', {
 			key: 'Enter'
@@ -16,6 +16,7 @@ export default {
 		});
 
 		input.dispatchEvent(event);
+		await component.$tick();
 
 		assert.ok(blurred);
 	}

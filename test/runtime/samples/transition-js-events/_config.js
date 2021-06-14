@@ -12,6 +12,7 @@ export default {
 
 	async test({ assert, component, target, raf }) {
 		component.visible = true;
+		await component.$tick();
 
 		assert.htmlEqual(target.innerHTML, `
 			<p>introstart</p>
@@ -37,6 +38,7 @@ export default {
 		`);
 
 		component.visible = false;
+		await component.$tick();
 
 		assert.htmlEqual(target.innerHTML, `
 			<p>outrostart</p>
@@ -54,6 +56,7 @@ export default {
 		assert.equal(component.outro_count, 0);
 
 		component.visible = true;
+		await component.$tick();
 
 		await raf.tick(250);
 		assert.deepEqual(component.intros.sort(), ['a', 'a', 'b', 'b', 'c', 'c', 'd', 'd']);

@@ -3,6 +3,10 @@ export default {
 		clicked: false
 	},
 
+	compileOptions: {
+		accessors: true
+	},
+
 	snapshot(target) {
 		const button = target.querySelector('button');
 
@@ -16,6 +20,7 @@ export default {
 		assert.equal(button, snapshot.button);
 
 		await button.dispatchEvent(new window.MouseEvent('click'));
+		await component.$tick();
 
 		assert.ok(component.clicked);
 		assert.htmlEqual(target.innerHTML, `

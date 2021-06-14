@@ -17,18 +17,20 @@ export default {
 
 	html: '<p>potato</p>',
 
-	test({ assert, component, target }) {
+	async test({ assert, component, target }) {
 		assert.equal(count_a, 1);
 		assert.equal(count_b, 0);
 
 		a = false;
 		component.foo = 'soup';
+		await component.$tick();
 		assert.equal(count_a, 2);
 		assert.equal(count_b, 1);
 
 		assert.htmlEqual(target.innerHTML, '<p>SOUP</p>');
 
 		component.foo = 'salad';
+		await component.$tick();
 		assert.equal(count_a, 3);
 		assert.equal(count_b, 1);
 

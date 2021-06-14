@@ -7,13 +7,13 @@ export default {
 		<label><input type="checkbox" value="Coconut"> Coconut</label>
 	`,
 
-	async test({ assert, target, window }) {
+	async test({ assert, component, target, window }) {
 		const [input1, input2, input3, input4, input5] = target.querySelectorAll('input');
 		const event = new window.Event('change');
 
 		input3.checked = true;
 		await input3.dispatchEvent(event);
-
+		await component.$tick();
 		assert.htmlEqual(target.innerHTML, `
 			<label><input type="checkbox" value="Chocolate"> Chocolate</label>
 			<label><input type="checkbox" value="Vanilla"> Vanilla</label>
@@ -30,7 +30,7 @@ export default {
 
 		input4.checked = true;
 		await input4.dispatchEvent(event);
-
+		await component.$tick();
 		assert.htmlEqual(target.innerHTML, `
 			<label><input type="checkbox" value="Chocolate"> Chocolate</label>
 			<label><input type="checkbox" value="Lemon"> Lemon</label>
@@ -47,7 +47,7 @@ export default {
 
 		input3.checked = false;
 		await input3.dispatchEvent(event);
-
+		await component.$tick();
 		assert.htmlEqual(target.innerHTML, `
 			<label><input type="checkbox" value="Lemon"> Lemon</label>
 			<label><input type="checkbox" value="Chocolate"> Chocolate</label>

@@ -80,7 +80,7 @@ export default {
 
 		inputs[0].checked = true;
 		await inputs[0].dispatchEvent(event);
-
+		await component.$tick();
 		assert.htmlEqual(target.innerHTML, `
 			<div>
 				<label>
@@ -130,7 +130,7 @@ export default {
 		`);
 		inputs[3].checked = true;
 		await inputs[3].dispatchEvent(event);
-
+		await component.$tick();
 		assert.htmlEqual(target.innerHTML, `
 			<div>
 				<label>
@@ -181,7 +181,7 @@ export default {
 
 		inputs[8].checked = false;
 		await inputs[8].dispatchEvent(event);
-
+		await component.$tick();
 		assert.htmlEqual(target.innerHTML, `
 			<div>
 				<label>
@@ -231,6 +231,7 @@ export default {
 		`);
 
 		component.selected_array = [[values[1], values[2]], [values[2]]];
+		await component.$tick();
 
 		assert.equal(inputs[0].checked, false);
 		assert.equal(inputs[1].checked, true);

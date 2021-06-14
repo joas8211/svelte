@@ -5,7 +5,7 @@ export default {
 		foo: 42
 	},
 
-	test({ assert, component, target, window }) {
+	async test({ assert, component, target, window }) {
 		const event = new window.MouseEvent('click');
 		const button = target.querySelector('button');
 
@@ -18,6 +18,7 @@ export default {
 		});
 
 		button.dispatchEvent(event);
+		await component.$tick();
 
 		assert.equal(count, 1);
 		assert.equal(number, 42);

@@ -3,6 +3,7 @@ export default {
 
 	async test({ assert, component, target }) {
 		component.visible = true;
+		await component.$tick();
 		assert.htmlEqual(target.innerHTML, `
 			<div>b</div><div>b</div><div>c</div><div>c</div>
 		`);

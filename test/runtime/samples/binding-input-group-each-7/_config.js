@@ -27,6 +27,7 @@ export default {
 			checked.add(i);
 			inputs[i].checked = true;
 			await inputs[i].dispatchEvent(event);
+			await component.$tick();
 		};
 
 		for (let i = 0; i < 18; i++) {

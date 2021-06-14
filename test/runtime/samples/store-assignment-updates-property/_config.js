@@ -11,6 +11,7 @@ export default {
 		const click = new window.MouseEvent('click');
 
 		await btn1.dispatchEvent(click);
+		await component.$tick();
 
 		assert.htmlEqual(target.innerHTML, `
 			<p>a: {"foo":4,"bar":2}</p>
@@ -20,6 +21,7 @@ export default {
 		`);
 
 		await btn2.dispatchEvent(click);
+		await component.$tick();
 
 		assert.htmlEqual(target.innerHTML, `
 			<p>a: {"foo":5,"bar":2}</p>

@@ -3,8 +3,9 @@ export default {
 		<p>doubled: 2</p>
 	`,
 
-	test({ assert, component, target }) {
+	async test({ assert, component, target }) {
 		component.a = 2;
+		await component.$tick();
 
 		assert.equal(component.doubled, 4);
 		assert.htmlEqual(target.innerHTML, `
@@ -12,6 +13,7 @@ export default {
 		`);
 
 		component.doubled = 3;
+		await component.$tick();
 
 		assert.equal(component.doubled, 3);
 		assert.htmlEqual(target.innerHTML, `

@@ -24,11 +24,12 @@ export default {
 
 	html: '(a)(b)(c)',
 
-	test({ assert, component, target }) {
-		function test(sequence) {
+	async test({ assert, component, target }) {
+		async function test(sequence) {
 			const previous = target.textContent;
 			const expected = sequence.split('').map(x => `(${x})`).join('');
 			component.values = toObjects(sequence);
+			await component.$tick();
 			assert.htmlEqual(
 				target.innerHTML,
 				expected,
@@ -37,26 +38,26 @@ export default {
 		}
 
 		// first, some fixed tests so that we can debug them
-		test('abc');
-		test('abcd');
-		test('abecd');
-		test('fabecd');
-		test('fabed');
-		test('beadf');
-		test('ghbeadf');
-		test('gf');
-		test('gc');
-		test('g');
-		test('');
-		test('abc');
-		test('duqbmineapjhtlofrskcg');
-		test('hdnkjougmrvftewsqpailcb');
-		test('bidhfacge');
-		test('kgjnempcboaflidh');
-		test('fekbijachgd');
-		test('kdmlgfbicheja');
+		await test('abc');
+		await test('abcd');
+		await test('abecd');
+		await test('fabecd');
+		await test('fabed');
+		await test('beadf');
+		await test('ghbeadf');
+		await test('gf');
+		await test('gc');
+		await test('g');
+		await test('');
+		await test('abc');
+		await test('duqbmineapjhtlofrskcg');
+		await test('hdnkjougmrvftewsqpailcb');
+		await test('bidhfacge');
+		await test('kgjnempcboaflidh');
+		await test('fekbijachgd');
+		await test('kdmlgfbicheja');
 
 		// then, we party
-		for (let i = 0; i < 100; i += 1) test(permute());
+		for (let i = 0; i < 100; i += 1) await test(permute());
 	}
 };

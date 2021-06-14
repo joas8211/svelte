@@ -40,12 +40,13 @@ export default {
 	<p>2</p>
 	`,
 
-	test({ assert, component, target }) {
+	async test({ assert, component, target }) {
 		component.reads = {};
 
 		component._0 = 'a';
 		component._1 = 'b';
 		component._2 = 'c';
+		await component.$tick();
 
 		assert.htmlEqual(target.innerHTML, `
 			<p>d1</p>

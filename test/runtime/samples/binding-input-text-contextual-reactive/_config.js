@@ -55,6 +55,7 @@ export default {
 		}
 
 		component.filter = 'remaining';
+		await component.$tick();
 
 		assert.htmlEqual(target.innerHTML, `
 			<div>
@@ -70,6 +71,7 @@ export default {
 		`);
 
 		await set_text(1, 'four');
+		await component.$tick();
 
 		assert.htmlEqual(target.innerHTML, `
 			<div>
@@ -91,6 +93,7 @@ export default {
 		]);
 
 		await set_done(0, true);
+		await component.$tick();
 
 		assert.htmlEqual(target.innerHTML, `
 			<div>
@@ -107,7 +110,9 @@ export default {
 			{ done: false, text: 'four' }
 		]);
 
+
 		component.filter = 'done';
+		await component.$tick();
 
 		assert.htmlEqual(target.innerHTML, `
 			<div>

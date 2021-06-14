@@ -11,10 +11,11 @@ export default {
 		]
 	},
 
-	test({ assert, component, target }) {
+	async test({ assert, component, target }) {
 		const { things } = component;
 
 		component.things = things.reverse();
+		await component.$tick();
 
 		assert.htmlEqual(target.innerHTML, `
 			<div data-a="3" data-b="4"></div>

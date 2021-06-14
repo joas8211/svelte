@@ -18,6 +18,7 @@ export default {
 		const event = new window.MouseEvent('click');
 
 		await button1.dispatchEvent(event);
+		await component.$tick();
 		assert.htmlEqual(target.innerHTML, `
 			<div>
 				hello world 1 hello
@@ -34,6 +35,7 @@ export default {
 		`);
 
 		await button2.dispatchEvent(event);
+		await component.$tick();
 		assert.htmlEqual(target.innerHTML, `
 			<div>
 				hello world 1 hello
@@ -50,6 +52,7 @@ export default {
 		`);
 
 		await button3.dispatchEvent(event);
+		await component.$tick();
 		assert.htmlEqual(target.innerHTML, `
 			<div>
 				hello world 1 hello

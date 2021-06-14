@@ -24,11 +24,11 @@ export default {
 			<input value="App"/>
 		</div>
 	`,
-	async test({ assert, target, window }) {
+	async test({ assert, component, target, window }) {
 		const [input1, input2, input3, input4] = target.querySelectorAll('input');
 		input1.value = 'Awesome';
 		await input1.dispatchEvent(new window.Event('input'));
-
+		await component.$tick();
 		assert.htmlEqual(
 			target.innerHTML,
 			`
@@ -47,7 +47,7 @@ export default {
 
 		input2.value = 'Svelte';
 		await input2.dispatchEvent(new window.Event('input'));
-
+		await component.$tick();
 		assert.htmlEqual(
 			target.innerHTML,
 			`
@@ -66,7 +66,7 @@ export default {
 
 		input3.value = 'Foo';
 		await input3.dispatchEvent(new window.Event('input'));
-
+		await component.$tick();
 		assert.htmlEqual(
 			target.innerHTML,
 			`
@@ -85,7 +85,7 @@ export default {
 
 		input4.value = 'Bar';
 		await input4.dispatchEvent(new window.Event('input'));
-
+		await component.$tick();
 		assert.htmlEqual(
 			target.innerHTML,
 			`

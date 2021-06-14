@@ -11,6 +11,7 @@ export default {
 		assert.equal(component.x, 1);
 
 		await button.dispatchEvent(click);
+		await component.$tick();
 
 		assert.equal(component.x, 3);
 		assert.htmlEqual(target.innerHTML, `
@@ -19,6 +20,7 @@ export default {
 		`);
 
 		await button.dispatchEvent(click);
+		await component.$tick();
 
 		assert.equal(component.x, 5);
 		assert.htmlEqual(target.innerHTML, `

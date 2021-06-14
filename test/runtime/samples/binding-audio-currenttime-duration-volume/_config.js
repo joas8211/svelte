@@ -4,7 +4,7 @@ export default {
 	// instead
 	skip: true,
 
-	test({ assert, component, target, window }) {
+	async test({ assert, component, target, window }) {
 		assert.equal(component.t, 0);
 		assert.equal(component.d, 0);
 		assert.equal(component.v, 0.5);
@@ -28,6 +28,7 @@ export default {
 		audio.dispatchEvent(volumechange);
 		audio.dispatchEvent(ratechange);
 		audio.play();
+		await component.$tick();
 
 		assert.equal(component.t, 10);
 		assert.equal(component.d, 0); // not 20, because read-only. Not sure how to test this!

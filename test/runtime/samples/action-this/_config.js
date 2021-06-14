@@ -5,6 +5,7 @@ export default {
 
 		assert.htmlEqual(target.innerHTML, '<button>1</button>');
 		await button.dispatchEvent(click);
+		await component.$tick();
 		await Promise.resolve();
 		assert.htmlEqual(target.innerHTML, '<button>2</button>');
 	}

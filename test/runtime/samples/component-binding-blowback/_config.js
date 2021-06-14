@@ -1,5 +1,5 @@
 export default {
-	test({ assert, component }) {
+	async test({ assert, component }) {
 		let count = 0;
 
 		component.$on('state', ({ changed }) => {
@@ -7,6 +7,7 @@ export default {
 		});
 
 		component.x = true;
+		await component.$tick();
 		assert.equal(count, 0);
 	}
 };

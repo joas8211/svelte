@@ -17,7 +17,7 @@ export default {
 		<div>e</div>
 	`,
 
-	test({ assert, component, target, window, raf }) {
+	async test({ assert, component, target, window, raf }) {
 		let divs = document.querySelectorAll('div');
 		divs.forEach(div => {
 			div.getBoundingClientRect = function() {
@@ -40,6 +40,7 @@ export default {
 			{ id: 4, name: 'd' },
 			{ id: 1, name: 'a' }
 		];
+		await component.$tick();
 
 		divs = document.querySelectorAll('div');
 		assert.equal(divs[0].dy, 120);

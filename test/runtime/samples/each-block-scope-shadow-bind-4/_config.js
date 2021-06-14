@@ -13,13 +13,13 @@ export default {
 		</div>
 		<button>Button</button>
 	`,
-	async test({ assert, target, window }) {
+	async test({ assert, component, target, window }) {
 		const input = target.querySelector('input');
 		const button = target.querySelector('button');
 
 		input.value = 'Awesome';
 		await input.dispatchEvent(new window.Event('input'));
-
+		await component.$tick();
 		assert.htmlEqual(
 			target.innerHTML,
 			`
@@ -33,7 +33,7 @@ export default {
 
 
 		await button.dispatchEvent(new window.MouseEvent('click'));
-
+		await component.$tick();
 		assert.htmlEqual(
 			target.innerHTML,
 			`
@@ -49,7 +49,7 @@ export default {
 
 		input.value = 'Svelte';
 		await input.dispatchEvent(new window.Event('input'));
-
+		await component.$tick();
 		assert.htmlEqual(
 			target.innerHTML,
 			`

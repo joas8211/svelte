@@ -4,8 +4,9 @@ export default {
 			<p>unconditional</p>
 		</div>`,
 
-	test({ assert, component, target }) {
+	async test({ assert, component, target }) {
 		component.foo = true;
+		await component.$tick();
 		assert.htmlEqual(target.innerHTML, `
 			<div>
 				<p>unconditional</p>

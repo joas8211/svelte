@@ -11,8 +11,9 @@ export default {
 		<p>eagle: wings</p>
 	`,
 
-	test({ assert, component, target }) {
+	async test({ assert, component, target }) {
 		component.animalPawsEntries = [['foo', 'bar']];
+		await component.$tick();
 		assert.htmlEqual( target.innerHTML, `
 			<p>foo: bar</p>
 		`);

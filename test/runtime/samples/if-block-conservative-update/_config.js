@@ -11,10 +11,11 @@ export default {
 
 	html: '<p>potato</p>',
 
-	test({ assert, component, target }) {
+	async test({ assert, component, target }) {
 		assert.equal(count, 1);
 
 		component.foo = 'soup';
+		await component.$tick();
 		assert.equal(count, 1);
 
 		assert.htmlEqual(target.innerHTML, '<p>soup</p>');

@@ -17,7 +17,7 @@ export default {
 		<input type="checkbox">
 	`,
 
-	test({ assert, component, target, window }) {
+	async test({ assert, component, target, window }) {
 		const { cats } = component;
 		const newCats = cats.slice();
 		newCats.push({
@@ -25,6 +25,7 @@ export default {
 			checked: false
 		});
 		component.cats = newCats;
+		await component.$tick();
 
 		let inputs = target.querySelectorAll('input');
 		assert.equal(inputs.length, 3);
@@ -32,6 +33,7 @@ export default {
 		const event = new window.Event('change');
 		inputs[0].checked = true;
 		inputs[0].dispatchEvent(event);
+		await component.$tick();
 
 		inputs = target.querySelectorAll('input');
 		assert.equal(inputs.length, 3);

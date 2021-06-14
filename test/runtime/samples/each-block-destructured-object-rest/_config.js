@@ -11,8 +11,9 @@ export default {
 		<p class="bird">eagle</p>
 	`,
 
-	test({ assert, component, target }) {
+	async test({ assert, component, target }) {
 		component.animalEntries = [{ animal: 'cow', class: 'mammal' }];
+		await component.$tick();
 		assert.htmlEqual(target.innerHTML, `
 			<p class="mammal">cow</p>
 		`);

@@ -56,7 +56,7 @@ export default {
 
 		input.checked = true;
 		await input.dispatchEvent(change);
-
+		await component.$tick();
 		assert.ok(component.todos.third.done);
 		assert.htmlEqual(target.innerHTML, `
 			<div class="todo done">

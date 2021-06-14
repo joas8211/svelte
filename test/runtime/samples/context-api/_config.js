@@ -15,7 +15,7 @@ export default {
 		let buttons = target.querySelectorAll('button');
 
 		await buttons[1].dispatchEvent(click);
-
+		await component.$tick();
 		assert.htmlEqual(target.innerHTML, `
 			<div class="tabs">
 				<div class="tab-list">
@@ -28,6 +28,7 @@ export default {
 		`);
 
 		component.show_medium = true;
+		await component.$tick();
 
 		assert.htmlEqual(target.innerHTML, `
 			<div class="tabs">
@@ -44,7 +45,7 @@ export default {
 		buttons = target.querySelectorAll('button');
 
 		await buttons[1].dispatchEvent(click);
-
+		await component.$tick();
 		assert.htmlEqual(target.innerHTML, `
 			<div class="tabs">
 				<div class="tab-list">
@@ -58,6 +59,7 @@ export default {
 		`);
 
 		component.show_medium = false;
+		await component.$tick();
 
 		assert.htmlEqual(target.innerHTML, `
 			<div class="tabs">

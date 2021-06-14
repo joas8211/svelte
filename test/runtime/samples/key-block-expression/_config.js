@@ -3,18 +3,21 @@ export default {
 	async test({ assert, component, target, window }) {
 		let div = target.querySelector('div');
 		component.value = 2;
+		await component.$tick();
 		assert.htmlEqual(target.innerHTML, '<div>200</div>');
 		assert.notStrictEqual(div, target.querySelector('div'));
 
 		div = target.querySelector('div');
 
 		component.anotherValue = 5;
+		await component.$tick();
 		assert.htmlEqual(target.innerHTML, '<div>250</div>');
 		assert.notStrictEqual(div, target.querySelector('div'));
 
 		div = target.querySelector('div');
 
 		component.thirdValue = 9;
+		await component.$tick();
 		assert.htmlEqual(target.innerHTML, '<div>259</div>');
 		assert.strictEqual(div, target.querySelector('div'));
 

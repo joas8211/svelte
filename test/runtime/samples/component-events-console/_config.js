@@ -1,7 +1,7 @@
 export default {
 	html: '<button>click me</button>',
 
-	test({ assert, component, target }) {
+	async test({ assert, component, target }) {
 		const button = target.querySelector('button');
 		const messages = [];
 
@@ -12,6 +12,7 @@ export default {
 
 		try {
 			button.dispatchEvent(new window.MouseEvent('click'));
+			await component.$tick();
 			assert.deepEqual(messages, [
 				'clicked'
 			]);

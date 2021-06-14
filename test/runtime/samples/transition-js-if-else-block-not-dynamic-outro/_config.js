@@ -3,6 +3,7 @@ export default {
 		const t = target.querySelector('#t');
 
 		await (component.condition = false);
+		await component.$tick();
 
 		let time = 0;
 		raf.tick(time += 25);
@@ -15,6 +16,7 @@ export default {
 		// toggling back in the middle of the out transition
 		// will reuse the previous element
 		await (component.condition = true);
+		await component.$tick();
 
 		assert.htmlEqual(target.innerHTML, `
 			<div id="f">FALSE</div>

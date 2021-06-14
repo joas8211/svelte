@@ -6,13 +6,15 @@ export default {
 		<h1>hello</h1>
 	`,
 
-	test({ assert, component, target }) {
+	async test({ assert, component, target }) {
 		component.visible = false;
+		await component.$tick();
 		assert.htmlEqual(target.innerHTML, `
 			<div>The text is missing</div>
 		`);
 
 		component.visible = true;
+		await component.$tick();
 		assert.htmlEqual(target.innerHTML, `
 			<div>The text is hello</div>
 			<h1>hello</h1>

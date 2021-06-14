@@ -6,9 +6,10 @@ export default {
 
 	html: '<div></div>',
 
-	test({ assert, component, target }) {
+	async test({ assert, component, target }) {
 		component.show = true;
 		component.fields = [1, 2, 3];
+		await component.$tick();
 
 		assert.htmlEqual( target.innerHTML, `
 			<div>
@@ -19,6 +20,7 @@ export default {
 		` );
 
 		component.fields = [1, 2, 3, 4];
+		await component.$tick();
 
 		assert.htmlEqual( target.innerHTML, `
 			<div>

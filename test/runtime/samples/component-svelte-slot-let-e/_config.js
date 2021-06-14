@@ -8,6 +8,7 @@ export default {
 
 	async test({ assert, target, component }) {
 		component.x = 2;
+		await component.$tick();
 
 		assert.htmlEqual(target.innerHTML, `
 			<span>2</span>

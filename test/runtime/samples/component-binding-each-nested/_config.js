@@ -17,7 +17,7 @@ export default {
 
 		inputs[0].value = 'blah';
 		await inputs[0].dispatchEvent(event);
-
+		await component.$tick();
 		assert.deepEqual(component.a, [{ name: 'blah' }, { name: 'bar' }, { name: 'baz' }]);
 		assert.htmlEqual(target.innerHTML, `
 			<input><input><input>

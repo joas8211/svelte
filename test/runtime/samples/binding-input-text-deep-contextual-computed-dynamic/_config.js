@@ -29,7 +29,7 @@ export default {
 		// edit bar
 		input.value = 'e';
 		await input.dispatchEvent(event);
-
+		await component.$tick();
 		assert.htmlEqual(target.innerHTML, `
 			<input>
 			<pre>{"foo":"a","bar":"e","baz":"c"}</pre>
@@ -37,11 +37,12 @@ export default {
 
 		// edit baz
 		component.prop = 'baz';
+		await component.$tick();
 		assert.equal(input.value, 'c');
 
 		input.value = 'f';
 		await input.dispatchEvent(event);
-
+		await component.$tick();
 		assert.htmlEqual(target.innerHTML, `
 			<input>
 			<pre>{"foo":"a","bar":"e","baz":"f"}</pre>
@@ -49,11 +50,12 @@ export default {
 
 		// edit foo
 		component.prop = 'foo';
+		await component.$tick();
 		assert.equal(input.value, 'a');
 
 		input.value = 'd';
 		await input.dispatchEvent(event);
-
+		await component.$tick();
 		assert.htmlEqual(target.innerHTML, `
 			<input>
 			<pre>{"foo":"d","bar":"e","baz":"f"}</pre>

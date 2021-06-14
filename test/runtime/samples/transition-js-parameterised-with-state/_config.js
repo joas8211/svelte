@@ -3,8 +3,10 @@ export default {
 		duration: 200
 	},
 
-	test({ assert, component, target, window, raf }) {
+	async test({ assert, component, target, window, raf }) {
 		component.visible = true;
+		await component.$tick();
+
 		const div = target.querySelector('div');
 		assert.equal(div.foo, 0);
 

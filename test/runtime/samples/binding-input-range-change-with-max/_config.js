@@ -11,7 +11,7 @@ export default {
 		<p>10 of 10</p>
 	`,
 
-	async test({ assert, target, window }) {
+	async test({ assert, component, target, window }) {
 		const input = target.querySelector('input');
 		assert.equal(input.value, '10');
 
@@ -22,7 +22,7 @@ export default {
 
 		const button = target.querySelector('button');
 		await button.dispatchEvent(new window.Event('click'));
-
+		await component.$tick();
 		assert.equal(input.value, '20');
 		assert.htmlEqual(target.innerHTML, `
 			<button></button>

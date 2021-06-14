@@ -9,7 +9,7 @@ export default {
 		const clickEvent = new window.MouseEvent('click');
 
 		await btn.dispatchEvent(clickEvent);
-
+		await component.$tick();
 		assert.htmlEqual(
 			target.innerHTML,
 			`

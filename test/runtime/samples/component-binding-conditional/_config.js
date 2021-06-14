@@ -6,8 +6,9 @@ export default {
 		<p>y: bar</p>
 	`,
 
-	test({ assert, component, target }) {
+	async test({ assert, component, target }) {
 		component.x = false;
+		await component.$tick();
 
 		assert.htmlEqual(target.innerHTML, `
 			<p>y: bar</p>

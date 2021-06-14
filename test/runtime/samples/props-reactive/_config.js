@@ -10,8 +10,9 @@ export default {
 		<p>4</p>
 	`,
 
-	test({ assert, component, target }) {
+	async test({ assert, component, target }) {
 		component.d = 5;
+		await component.$tick();
 
 		assert.htmlEqual(target.innerHTML, `
 			<p>5</p>

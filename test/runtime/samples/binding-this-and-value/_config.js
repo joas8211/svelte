@@ -9,13 +9,13 @@ export default {
 		<p>value: initial</p>
 	`,
 
-	async test({ assert, target, window }) {
+	async test({ assert, component, target, window }) {
 		const input = target.querySelector('input');
 		const event = new window.Event('input');
 
 		input.value = 'changed';
 		await input.dispatchEvent(event);
-
+		await component.$tick();
 		assert.htmlEqual(target.innerHTML, `
 			<input>
 			<p>value: changed</p>

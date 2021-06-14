@@ -5,7 +5,7 @@ export default {
 		const input = target.querySelector('input');
 		input.value = 'svelte';
 		await input.dispatchEvent(new window.Event('input'));
-
+		await component.$tick();
 		assert.equal(target.querySelectorAll('input').length, 3);
 		assert.deepEqual(component.data, { a: 'svelte', b: 'B', c: 'C' });
 		assert.deepEqual(component.x, ['a', 'b', 'c']);

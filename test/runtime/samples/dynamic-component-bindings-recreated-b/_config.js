@@ -8,9 +8,10 @@ export default {
 		<p>green green</p>
 	`,
 
-	test({ assert, component, target }) {
+	async test({ assert, component, target }) {
 		component.foo = undefined;
 		component.x = false;
+		await component.$tick();
 
 		assert.htmlEqual(target.innerHTML, `
 			<p>parent red</p>
@@ -19,6 +20,7 @@ export default {
 
 		component.foo = undefined;
 		component.x = true;
+		await component.$tick();
 
 		assert.htmlEqual(target.innerHTML, `
 			<p>parent green</p>

@@ -30,6 +30,7 @@ export default {
 		// clear the previous 'scrolling' state
 		clock.flush();
 		component.scrollY = 100;
+		await component.$tick();
 
 		clock.flush();
 		assert.equal(window.pageYOffset, 100);

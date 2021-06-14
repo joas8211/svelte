@@ -23,7 +23,7 @@ export default {
 
 		input.value = 'everybody';
 		await input.dispatchEvent(event);
-
+		await component.$tick();
 		assert.equal(input.value, 'everybody');
 		assert.htmlEqual(target.innerHTML, `
 			<h1>Hello everybody!</h1>
@@ -31,6 +31,7 @@ export default {
 		`);
 
 		component.component = { name: 'goodbye' };
+		await component.$tick();
 		assert.equal(input.value, 'goodbye');
 		assert.htmlEqual(target.innerHTML, `
 			<h1>Hello goodbye!</h1>

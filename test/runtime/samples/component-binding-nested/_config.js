@@ -20,7 +20,7 @@ export default {
 		const buttons = [...target.querySelectorAll('button')];
 
 		await buttons[0].dispatchEvent(click);
-
+		await component.$tick();
 		assert.equal(component.x, 'p');
 		assert.htmlEqual(target.innerHTML, `
 			<p>x: p</p>
@@ -33,7 +33,7 @@ export default {
 		`);
 
 		await buttons[1].dispatchEvent(click);
-
+		await component.$tick();
 		assert.equal(component.x, 'q');
 		assert.htmlEqual(target.innerHTML, `
 			<p>x: q</p>
@@ -46,7 +46,7 @@ export default {
 		`);
 
 		await buttons[2].dispatchEvent(click);
-
+		await component.$tick();
 		assert.equal(component.x, 'r');
 		assert.htmlEqual(target.innerHTML, `
 			<p>x: r</p>

@@ -14,6 +14,7 @@ export default {
 
 		input.value = 'bar';
 		await input.dispatchEvent(new window.Event('input'));
+		await component.$tick();
 
 		assert.htmlEqual(target.innerHTML, `
 			<p>bar</p>

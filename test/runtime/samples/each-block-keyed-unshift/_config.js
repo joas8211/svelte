@@ -8,8 +8,9 @@ export default {
 		<p>c</p>
 	`,
 
-	test({ assert, component, target }) {
+	async test({ assert, component, target }) {
 		component.titles = [{ name: 'a' }, { name: 'b' }, { name: 'c' }];
+		await component.$tick();
 
 		assert.htmlEqual(target.innerHTML, `
 			<p>a</p>

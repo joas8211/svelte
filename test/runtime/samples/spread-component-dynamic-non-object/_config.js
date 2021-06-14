@@ -12,7 +12,7 @@ export default {
 		<p>qux: named</p>
 	`,
 
-	test({ assert, component, target }) {
+	async test({ assert, component, target }) {
 		const html = `
 			<div><p>foo: undefined</p>
 			<p>baz: undefined</p>
@@ -21,30 +21,37 @@ export default {
 
 		// test undefined
 		component.props = undefined;
+		await component.$tick();
 		assert.htmlEqual(target.innerHTML, html);
 
 		// set object props
 		component.props = this.props.props;
+		await component.$tick();
 		assert.htmlEqual(target.innerHTML, this.html);
 
 		// test null
 		component.props = null;
+		await component.$tick();
 		assert.htmlEqual(target.innerHTML, html);
 
 		// set object props
 		component.props = this.props.props;
+		await component.$tick();
 		assert.htmlEqual(target.innerHTML, this.html);
 
 		// test boolean
 		component.props = true;
+		await component.$tick();
 		assert.htmlEqual(target.innerHTML, html);
 
 		// set object props
 		component.props = this.props.props;
+		await component.$tick();
 		assert.htmlEqual(target.innerHTML, this.html);
 
 		// test number
 		component.props = 123;
+		await component.$tick();
 		assert.htmlEqual(target.innerHTML, html);
 
 	}

@@ -13,27 +13,31 @@ export default {
 
 		const spy1 = spyOnValueSetter(input1, input1.value);
 		const spy2 = spyOnValueSetter(input2, input2.value);
-		
+
 		const event = new window.Event('input');
-		
+
 		input1.value = '12345';
 		spy1.reset();
 		await input1.dispatchEvent(event);
+		await component.$tick();
 
 		assert.ok(!spy1.isSetCalled());
-		
+
 		input2.value = '12345';
 		spy2.reset();
 		await input2.dispatchEvent(event);
+		await component.$tick();
 
 		assert.ok(!spy2.isSetCalled());
 
 		spy1.reset();
 		component.val1 = '56789';
+		await component.$tick();
 		assert.ok(spy1.isSetCalled());
 
 		spy2.reset();
 		component.val2 = '56789';
+		await component.$tick();
 		assert.ok(spy2.isSetCalled());
 	}
 };

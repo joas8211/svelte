@@ -3,10 +3,11 @@ export default {
 		condition: false
 	},
 
-	test({ assert, component, window }) {
+	async test({ assert, component, window }) {
 		assert.equal(window.document.title, '');
 
 		component.condition = true;
+		await component.$tick();
 		assert.equal(window.document.title, 'woo!!!');
 	}
 };

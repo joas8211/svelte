@@ -4,12 +4,14 @@ export default {
 		const click = new window.MouseEvent('click');
 
 		await buttons[0].dispatchEvent(click);
+		await component.$tick();
 		assert.deepEqual(component.snapshots, [
 			'before 0',
 			'after 1'
 		]);
 
 		await buttons[0].dispatchEvent(click);
+		await component.$tick();
 		assert.deepEqual(component.snapshots, [
 			'before 0',
 			'after 1',
@@ -18,6 +20,7 @@ export default {
 		]);
 
 		await buttons[1].dispatchEvent(click);
+		await component.$tick();
 		assert.deepEqual(component.snapshots, [
 			'before 0',
 			'after 1',

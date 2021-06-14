@@ -22,6 +22,7 @@ export default {
 		const click = new window.MouseEvent('click');
 
 		await buttons[1].dispatchEvent(click);
+		await component.$tick();
 
 		assert.htmlEqual(target.innerHTML, `
 			<button>a</button>

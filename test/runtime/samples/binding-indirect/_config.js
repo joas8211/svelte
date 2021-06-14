@@ -41,7 +41,7 @@ export default {
 
 		input.checked = true;
 		await input.dispatchEvent(change);
-
+		await component.$tick();
 		assert.ok(component.tasks[0].done);
 		assert.htmlEqual(target.innerHTML, `
 			<select>
@@ -63,12 +63,13 @@ export default {
 
 		options[1].selected = true;
 		await select.dispatchEvent(change);
+		await component.$tick();
 		assert.equal(component.selected, tasks[1]);
 		assert.ok(!input.checked);
 
 		input.checked = true;
 		await input.dispatchEvent(change);
-
+		await component.$tick();
 		assert.ok(component.tasks[1].done);
 		assert.htmlEqual(target.innerHTML, `
 			<select>

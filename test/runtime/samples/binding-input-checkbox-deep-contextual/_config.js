@@ -44,7 +44,7 @@ export default {
 
 		inputs[1].checked = true;
 		await inputs[1].dispatchEvent(event);
-
+		await component.$tick();
 		assert.equal(component.numCompleted, 2);
 		assert.htmlEqual(target.innerHTML, `
 			<div><input type="checkbox"><p>one</p></div><div><input type="checkbox"><p>two</p></div><div><input type="checkbox"><p>three</p></div>
@@ -55,6 +55,7 @@ export default {
 		items[2].completed = true;
 
 		component.items = items;
+		await component.$tick();
 		assert.ok(inputs[2].checked);
 		assert.htmlEqual(target.innerHTML, `
 			<div><input type="checkbox"><p>one</p></div><div><input type="checkbox"><p>two</p></div><div><input type="checkbox"><p>three</p></div>

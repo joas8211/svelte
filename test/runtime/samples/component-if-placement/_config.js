@@ -9,8 +9,9 @@ export default {
 		<span>After</span>
 	`,
 
-	test({ assert, component, target }) {
+	async test({ assert, component, target }) {
 		component.flag = false;
+		await component.$tick();
 		assert.htmlEqual( target.innerHTML, `
 			<span>Before</span>
 			<span>Component</span>

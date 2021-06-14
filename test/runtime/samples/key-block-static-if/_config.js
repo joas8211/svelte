@@ -9,7 +9,7 @@ export default {
 		const button = target.querySelector('button');
 
 		await button.dispatchEvent(new window.Event('click'));
-
+		await component.$tick();
 		assert.htmlEqual(target.innerHTML, `
 			<section>
 				<div>First</div>

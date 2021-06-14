@@ -11,12 +11,12 @@ export default {
 	before_test() {
 		delete require.cache[path.resolve(__dirname, 'data.js')];
 	},
-	async test({ assert, target, window }) {
+	async test({ assert, component, target, window }) {
 		const btn = target.querySelector('button');
 		const clickEvent = new window.MouseEvent('click');
 
 		await btn.dispatchEvent(clickEvent);
-		
+		await component.$tick();
 		assert.htmlEqual(target.innerHTML, `
 			import
 			<p>1 + 2 + 3 + 4 + 5 = 15</p>
@@ -26,7 +26,7 @@ export default {
 		`);
 
 		await btn.dispatchEvent(clickEvent);
-		
+		await component.$tick();
 		assert.htmlEqual(target.innerHTML, `
 			import
 			<p>1 + 2 + 3 + 4 + 5 + 6 = 21</p>

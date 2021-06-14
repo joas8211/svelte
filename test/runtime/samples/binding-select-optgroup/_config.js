@@ -33,7 +33,7 @@ export default {
 
 		options[1].selected = true;
 		await select.dispatchEvent(change);
-
+		await component.$tick();
 		assert.equal(component.name, 'World');
 		assert.htmlEqual(target.innerHTML, `
 			<h1>Hello World!</h1>

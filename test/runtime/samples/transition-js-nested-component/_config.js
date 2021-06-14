@@ -3,8 +3,9 @@ export default {
 		x: false
 	},
 
-	test({ assert, component, target, window, raf }) {
+	async test({ assert, component, target, window, raf }) {
 		component.x = true;
+		await component.$tick();
 
 		const div = target.querySelector('div');
 		assert.equal(div.foo, 0);
@@ -13,6 +14,7 @@ export default {
 		assert.equal(div.foo, 1);
 
 		component.x = false;
+		await component.$tick();
 		assert.htmlEqual(target.innerHTML, '<div></div>');
 
 		raf.tick(150);

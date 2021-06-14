@@ -3,8 +3,9 @@ export default {
 		visible: true
 	},
 
-	test({ assert, component, target, window, raf }) {
+	async test({ assert, component, target, window, raf }) {
 		component.visible = false;
+		await component.$tick();
 		const div = target.querySelector('div');
 
 		raf.tick(50);

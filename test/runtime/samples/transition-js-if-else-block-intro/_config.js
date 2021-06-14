@@ -1,7 +1,7 @@
 export default {
 	intro: true,
 
-	test({ assert, component, target, raf }) {
+	async test({ assert, component, target, raf }) {
 		assert.equal(target.querySelector('div'), component.no);
 		assert.equal(component.no.foo, 0);
 
@@ -10,6 +10,7 @@ export default {
 
 		raf.tick(500);
 		component.x = true;
+		await component.$tick();
 		assert.equal(component.no, undefined);
 		assert.equal(component.yes.foo, 0);
 

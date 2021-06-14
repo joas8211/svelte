@@ -120,10 +120,9 @@ describe('css', () => {
 				const window = env();
 
 				// dom
-				try {
-					const target = window.document.querySelector('main');
+				const target = window.document.querySelector('main');
 
-					new ClientComponent({ target, props: config.props });
+				ClientComponent.init({ target, props: config.props }).then(() => {
 					const html = target.innerHTML;
 
 					fs.writeFileSync(`${__dirname}/samples/${dir}/_actual.html`, html);
@@ -132,19 +131,19 @@ describe('css', () => {
 					assert.htmlEqual(actual_html, expected.html);
 
 					window.document.head.innerHTML = ''; // remove added styles
-				} catch (err) {
+				}).catch(err => {
 					console.log(dom.js.code);
 					throw err;
-				}
+				});
 
 				// ssr
-				try {
-					const actual_ssr = ServerComponent.render(config.props).html.replace(/svelte(-ref)?-[a-z0-9]+/g, (m, $1) => $1 ? m : 'svelte-xyz');
+				ServerComponent.render(config.props).then(result => {
+					const actual_ssr = result.html.replace(/svelte(-ref)?-[a-z0-9]+/g, (m, $1) => $1 ? m : 'svelte-xyz');
 					assert.htmlEqual(actual_ssr, expected.html);
-				} catch (err) {
+				}).catch(err => {
 					console.log(ssr.js.code);
 					throw err;
-				}
+				});
 			}
 		});
 	});

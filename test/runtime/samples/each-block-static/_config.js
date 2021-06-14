@@ -5,8 +5,9 @@ export default {
 
 	html: '',
 
-	test({ assert, component, target }) {
+	async test({ assert, component, target }) {
 		component.items = ['x'];
+		await component.$tick();
 		assert.htmlEqual(target.innerHTML, 'foo');
 	}
 };

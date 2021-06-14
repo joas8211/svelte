@@ -36,7 +36,7 @@ export default {
 
 		textarea.value = 'one source changed';
 		await textarea.dispatchEvent(event);
-
+		await component.$tick();
 		assert.equal(component.compiled, 'ONE SOURCE CHANGED\nTWO SOURCE');
 		assert.htmlEqual(target.innerHTML, `
 			<select>
@@ -61,12 +61,13 @@ export default {
 		// console.log(`select.__value`, select.__value)
 		// select.dispatchEvent(new window.Event('change'));
 		component.selectedComponent = components[1];
+		await component.$tick();
 
 		assert.equal(textarea.value, 'two source');
 
 		textarea.value = 'two source changed';
 		await textarea.dispatchEvent(event);
-
+		await component.$tick();
 		assert.equal(component.compiled, 'ONE SOURCE CHANGED\nTWO SOURCE CHANGED');
 		assert.htmlEqual(target.innerHTML, `
 			<select>

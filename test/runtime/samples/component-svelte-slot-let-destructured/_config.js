@@ -14,13 +14,14 @@ export default {
 			<span>3</span>
 		</div>`,
 
-	test({ assert, component, target }) {
+	async test({ assert, component, target }) {
 		component.things = [
 			{ num: 1 },
 			{ num: 2 },
 			{ num: 3 },
 			{ num: 4 }
 		];
+		await component.$tick();
 
 		assert.htmlEqual(target.innerHTML, `
 			<div>

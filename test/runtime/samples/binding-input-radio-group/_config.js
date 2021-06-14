@@ -35,7 +35,7 @@ export default {
 
 		inputs[0].checked = true;
 		await inputs[0].dispatchEvent(event);
-
+		await component.$tick();
 		assert.htmlEqual(target.innerHTML, `
 			<label>
 				<input type="radio" value="[object Object]"> Alpha
@@ -57,6 +57,7 @@ export default {
 		assert.equal(inputs[2].checked, false);
 
 		component.selected = values[2];
+		await component.$tick();
 		assert.equal(inputs[0].checked, false);
 		assert.equal(inputs[1].checked, false);
 		assert.equal(inputs[2].checked, true);

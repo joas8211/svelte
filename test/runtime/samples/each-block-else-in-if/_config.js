@@ -4,11 +4,13 @@ export default {
 		<p>after</p>
 	`,
 
-	test({ assert, component, target }) {
+	async test({ assert, component, target }) {
 		component.visible = false;
+		await component.$tick();
 		assert.htmlEqual(target.innerHTML, '');
 
 		component.visible = true;
+		await component.$tick();
 		assert.htmlEqual(target.innerHTML, `
 			<p>nothing</p>
 			<p>after</p>

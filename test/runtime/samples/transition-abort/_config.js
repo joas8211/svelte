@@ -9,6 +9,7 @@ export default {
 
 	async test({ assert, component, target, window, raf }) {
 		component.visible = false;
+		await component.$tick();
 
 		// abort halfway through the outro transition
 		raf.tick(50);

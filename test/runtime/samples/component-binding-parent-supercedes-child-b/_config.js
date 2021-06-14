@@ -6,6 +6,7 @@ export default {
 
 	async test({ assert, component, target, window }) {
 		component.a = false;
+		await component.$tick();
 
 		assert.htmlEqual(target.innerHTML, `
 			<p>Bar: yes</p>
@@ -13,8 +14,10 @@ export default {
 		`);
 
 		component.a = true;
+		await component.$tick();
 		assert.equal(component.x, 'yes');
 		component.x = undefined;
+		await component.$tick();
 
 		assert.htmlEqual(target.innerHTML, `
 			<p>Foo: undefined</p>
@@ -22,6 +25,7 @@ export default {
 		`);
 
 		component.a = false;
+		await component.$tick();
 
 		assert.htmlEqual(target.innerHTML, `
 			<p>Bar: no</p>

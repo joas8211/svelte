@@ -15,7 +15,7 @@ export default {
 		fulfil(9000);
 
 		return thePromise
-			.then(() => {
+			.then(async () => {
 				assert.htmlEqual(target.innerHTML, 'resolved');
 
 				let reject;
@@ -25,6 +25,7 @@ export default {
 				});
 
 				component.thePromise = thePromise;
+				await component.$tick();
 
 				assert.htmlEqual(target.innerHTML, 'waiting');
 

@@ -17,7 +17,7 @@ export default {
 		fulfil(42);
 
 		return thePromise
-			.then(() => {
+			.then(async () => {
 				assert.htmlEqual(target.innerHTML, `
 					<div><p>the value is 42</p></div>
 				`);
@@ -29,6 +29,7 @@ export default {
 				});
 
 				component.thePromise = thePromise;
+				await component.$tick();
 
 				assert.htmlEqual(target.innerHTML, `
 					<div><p>loading...</p></div>

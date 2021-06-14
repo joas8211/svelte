@@ -5,8 +5,9 @@ export default {
 
 	html: '<div class="test-class primary" role="button"></div>',
 
-	test({ assert, component, target, window }) {
+	async test({ assert, component, target, window }) {
 		component.primary = true;
+		await component.$tick();
 
 		assert.htmlEqual(
 			target.innerHTML,

@@ -12,10 +12,11 @@ export default {
 		<div>5</div>
 	`,
 
-	test({ assert, component, target, window, raf }) {
+	async test({ assert, component, target, window, raf }) {
 		raf.tick(100);
 
 		component.threshold = 4;
+		await component.$tick();
 
 		raf.tick(200);
 		assert.htmlEqual(target.innerHTML, `

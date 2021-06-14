@@ -19,7 +19,7 @@ export default {
 		const event = new window.Event('input');
 		input.value = 'h';
 		await input.dispatchEvent(event);
-
+		await component.$tick();
 		assert.equal(input.value, 'H');
 		assert.htmlEqual(target.innerHTML, `
 			<input>
@@ -28,6 +28,7 @@ export default {
 
 		input.value = 'he';
 		await input.dispatchEvent(event);
+		await component.$tick();
 		assert.equal(input.value, 'HE');
 		assert.htmlEqual(target.innerHTML, `
 			<input>

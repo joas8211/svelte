@@ -21,13 +21,14 @@ export default {
 
 		input.checked = false;
 		await input.dispatchEvent(event);
-
+		await component.$tick();
 		assert.htmlEqual(target.innerHTML, `
 			<input type="checkbox">
 			<p>false</p>
 		`);
 
 		component.foo = true;
+		await component.$tick();
 		assert.equal(input.checked, true);
 		assert.htmlEqual(target.innerHTML, `
 			<input type="checkbox">

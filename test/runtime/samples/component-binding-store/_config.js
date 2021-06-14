@@ -15,7 +15,7 @@ export default {
 
 		input1.value = '1';
 		await input1.dispatchEvent(new window.Event('input'));
-
+		await component.$tick();
 		assert.htmlEqual(
 			target.innerHTML,
 			`
@@ -30,7 +30,7 @@ export default {
 
 		input2.value = '123';
 		await input2.dispatchEvent(new window.Event('input'));
-
+		await component.$tick();
 		assert.htmlEqual(
 			target.innerHTML,
 			`
@@ -45,7 +45,7 @@ export default {
 
 		input1.value = '456';
 		await input1.dispatchEvent(new window.Event('input'));
-
+		await component.$tick();
 		assert.htmlEqual(
 			target.innerHTML,
 			`

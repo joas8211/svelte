@@ -13,7 +13,7 @@ export default {
 
 		const clickEvent = new window.MouseEvent('click');
 		await buttons[0].dispatchEvent(clickEvent);
-
+		await component.$tick();
 		assert.htmlEqual(
 			target.innerHTML,
 			`
@@ -28,7 +28,7 @@ export default {
 		);
 
 		await buttons[0].dispatchEvent(clickEvent);
-
+		await component.$tick();
 		assert.htmlEqual(
 			target.innerHTML,
 			`
@@ -43,8 +43,9 @@ export default {
 		);
 
 		await buttons[2].dispatchEvent(clickEvent);
+		await component.$tick();
 		await buttons[2].dispatchEvent(clickEvent);
-
+		await component.$tick();
 		assert.htmlEqual(
 			target.innerHTML,
 			`
@@ -59,7 +60,7 @@ export default {
 		);
 
 		await incrementBtn.dispatchEvent(clickEvent);
-
+		await component.$tick();
 		assert.htmlEqual(
 			target.innerHTML,
 			`
@@ -78,7 +79,7 @@ export default {
 		[incrementBtn, ...buttons] = target.querySelectorAll('button');
 
 		await buttons[3].dispatchEvent(clickEvent);
-
+		await component.$tick();
 		assert.htmlEqual(
 			target.innerHTML,
 			`
@@ -92,6 +93,6 @@ export default {
 			<span class="content">8</span>
 			<button>Test</button>
 		`
-		);		
+		);
 	}
 };

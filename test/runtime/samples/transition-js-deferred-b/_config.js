@@ -1,6 +1,7 @@
 export default {
-	test({ assert, component, target, raf }) {
+	async test({ assert, component, target, raf }) {
 		component.visible = true;
+		await component.$tick();
 
 		return Promise.resolve().then(() => {
 			const div = target.querySelector('.foo');

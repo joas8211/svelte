@@ -14,7 +14,7 @@ export default {
 			<p>baz false</p>
 		</div>`,
 
-	test({ assert, component, target }) {
+	async test({ assert, component, target }) {
 		const nested = component.nested;
 
 		assert.htmlEqual(target.innerHTML, `
@@ -26,6 +26,7 @@ export default {
 
 		// eslint-disable-next-line no-self-assign
 		nested.foo = nested.foo;
+		await component.$tick();
 		assert.htmlEqual(target.innerHTML, `
 			<div>
 				<h3>Called 1 times.</h3>

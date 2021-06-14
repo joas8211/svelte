@@ -3,25 +3,28 @@ export default {
 		<button>action</button>
 	`,
 
-	async test({ assert, target, window }) {
+	async test({ assert, component, target, window }) {
 		const button = target.querySelector('button');
 		const enter = new window.MouseEvent('mouseenter');
 		const leave = new window.MouseEvent('mouseleave');
 		const ctrlPress = new window.KeyboardEvent('keydown', { ctrlKey: true });
 
 		await button.dispatchEvent(enter);
+		await component.$tick();
 		assert.htmlEqual(target.innerHTML, `
 			<button>action</button>
 			<div class="tooltip">Perform an Action</div>
 		`);
 
 		await window.dispatchEvent(ctrlPress);
+		await component.$tick();
 		assert.htmlEqual(target.innerHTML, `
 			<button>action</button>
 			<div class="tooltip">Perform an augmented Action</div>
 		`);
 
 		await button.dispatchEvent(leave);
+		await component.$tick();
 		assert.htmlEqual(target.innerHTML, `
 			<button>action</button>
 		`);

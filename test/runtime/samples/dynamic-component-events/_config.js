@@ -7,13 +7,15 @@ export default {
 		<button>select foo</button>
 	`,
 
-	test({ assert, component, target, window }) {
+	async test({ assert, component, target, window }) {
 		const click = new window.MouseEvent('click');
 
 		target.querySelector('button').dispatchEvent(click);
+		await component.$tick();
 		assert.equal(component.selected, 'foo');
 
 		component.x = false;
+		await component.$tick();
 
 		assert.htmlEqual(target.innerHTML, `
 			<button>select bar</button>

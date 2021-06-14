@@ -14,7 +14,7 @@ export default {
 		<div data-one="1" data-two="2" data-b="overridden" data-d="deeeeee" >test</div>
 	`,
 
-	test({ assert, component, target }) {
+	async test({ assert, component, target }) {
 		component.a = {
 			'data-one': 10
 		};
@@ -22,6 +22,7 @@ export default {
 			'data-c': 'new'
 		};
 		component.d = 'DEEEEEE';
+		await component.$tick();
 
 		assert.htmlEqual(
 			target.innerHTML,

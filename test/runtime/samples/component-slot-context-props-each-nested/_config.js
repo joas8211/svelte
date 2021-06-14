@@ -10,15 +10,18 @@ export default {
 		const click = new window.MouseEvent('click');
 
 		await btn1.dispatchEvent(click);
+		await component.$tick();
 		assert.deepEqual(component.log, ['setKey(a, value-a-c, c)']);
 
 		await btn2.dispatchEvent(click);
+		await component.$tick();
 		assert.deepEqual(component.log, [
 			'setKey(a, value-a-c, c)',
 			'setKey(b, value-b-c, c)'
 		]);
 
 		await btn3.dispatchEvent(click);
+		await component.$tick();
 		assert.deepEqual(component.log, [
 			'setKey(a, value-a-c, c)',
 			'setKey(b, value-b-c, c)',
@@ -26,6 +29,7 @@ export default {
 		]);
 
 		await btn4.dispatchEvent(click);
+		await component.$tick();
 		assert.deepEqual(component.log, [
 			'setKey(a, value-a-c, c)',
 			'setKey(b, value-b-c, c)',

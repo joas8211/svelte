@@ -7,10 +7,11 @@ export default {
 		]
 	},
 
-	test({ assert, component, target, raf }) {
+	async test({ assert, component, target, raf }) {
 		const { things } = component;
 
 		component.things = [];
+		await component.$tick();
 		const spans = target.querySelectorAll('span');
 
 		raf.tick(25);
@@ -24,6 +25,7 @@ export default {
 		assert.equal(spans[2].foo, 0.75);
 
 		component.things = things;
+		await component.$tick();
 		raf.tick(225);
 
 		assert.htmlEqual(target.innerHTML, `

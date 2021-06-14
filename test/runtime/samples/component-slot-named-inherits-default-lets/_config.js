@@ -8,11 +8,11 @@ export default {
 		</div>
 	`,
 
-	async test({ assert, target, window }) {
+	async test({ assert, component, target, window }) {
 		const button = target.querySelector('button');
 
 		await button.dispatchEvent(new window.MouseEvent('click'));
-
+		await component.$tick();
 		assert.htmlEqual(target.innerHTML, `
 			<div>
 				<p>count in default slot: 1</p>

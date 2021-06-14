@@ -2,8 +2,9 @@ export default {
 	props: {
 		things: []
 	},
-	test({ assert, component, target, window, raf }) {
+	async test({ assert, component, target, window, raf }) {
 		const div = target.querySelector('div');
+		await component.$tick();
 		component.things = ['a', 'b', 'c'];
 
 		raf.tick(200);

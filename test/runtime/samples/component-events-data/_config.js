@@ -1,5 +1,5 @@
 export default {
-	test({ assert, component, target, window }) {
+	async test({ assert, component, target, window }) {
 		const buttons = target.querySelectorAll('button');
 		const click = new window.MouseEvent('click');
 
@@ -13,6 +13,7 @@ export default {
 		buttons[2].dispatchEvent(click);
 		buttons[1].dispatchEvent(click);
 		buttons[0].dispatchEvent(click);
+		await component.$tick();
 
 		assert.deepEqual(selected, [
 			'bar',

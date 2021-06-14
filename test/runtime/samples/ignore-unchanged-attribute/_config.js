@@ -11,18 +11,21 @@ export default {
 		<p class='2'></p>
 	`,
 
-	test({ assert, component }) {
+	async test({ assert, component }) {
 		counter.count = 0;
 
 		component.x = 3;
+		await component.$tick();
 		assert.equal(counter.count, 0);
 
 		component.x = 4;
 		component.y = 5;
+		await component.$tick();
 		assert.equal(counter.count, 1);
 
 		component.x = 5;
 		component.y = 5;
+		await component.$tick();
 		assert.equal(counter.count, 1);
 	}
 };

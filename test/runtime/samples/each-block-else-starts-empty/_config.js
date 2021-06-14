@@ -10,8 +10,9 @@ export default {
 		after
 	`,
 
-	test({ assert, component, target }) {
+	async test({ assert, component, target }) {
 		component.animals = ['wombat'];
+		await component.$tick();
 		assert.htmlEqual(target.innerHTML, `
 			before
 			<p>wombat</p>

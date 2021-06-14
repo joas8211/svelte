@@ -20,6 +20,7 @@ export default {
 		});
 
 		await window.dispatchEvent(event);
+		await component.$tick();
 
 		assert.htmlEqual(
 			target.innerHTML,

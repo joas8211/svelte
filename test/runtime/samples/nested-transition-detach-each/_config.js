@@ -11,8 +11,9 @@ export default {
 		dev: true
 	},
 
-	test({ assert, component, target, window, raf }) {
+	async test({ assert, component, target, window, raf }) {
 		component.visible = true;
+		await component.$tick();
 		assert.htmlEqual(target.innerHTML, `
 			<div class="row">
 				<div class="cell">1, a</div>
@@ -32,6 +33,7 @@ export default {
 		`);
 
 		component.visible = false;
+		await component.$tick();
 		raf.tick(0);
 		raf.tick(100);
 		assert.htmlEqual(target.innerHTML, '');

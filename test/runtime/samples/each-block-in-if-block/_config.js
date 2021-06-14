@@ -6,8 +6,9 @@ export default {
 
 	html: '<div><div>Apple</div><div>Banana</div><div>Tomato</div></div>',
 
-	test({ assert, component, target }) {
+	async test({ assert, component, target }) {
 		component.dummy = true;
+		await component.$tick();
 		assert.htmlEqual(target.innerHTML, '<div><div>Apple</div><div>Banana</div><div>Tomato</div></div>' );
 	}
 };

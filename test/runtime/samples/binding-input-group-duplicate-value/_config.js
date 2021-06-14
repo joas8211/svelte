@@ -35,7 +35,7 @@ export default {
 
 		inputs[0].checked = true;
 		await inputs[0].dispatchEvent(event);
-
+		await component.$tick();
 		assert.htmlEqual(p.innerHTML, 'Checked: a');
 
 		assert.equal(inputs[0].checked, true);
@@ -50,7 +50,7 @@ export default {
 
 		inputs[3].checked = true;
 		await inputs[3].dispatchEvent(event);
-
+		await component.$tick();
 		assert.htmlEqual(p.innerHTML, 'Checked: a,d');
 
 		assert.equal(inputs[0].checked, true);
@@ -65,7 +65,7 @@ export default {
 
 		inputs[4].checked = false;
 		await inputs[4].dispatchEvent(event);
-
+		await component.$tick();
 		assert.htmlEqual(p.innerHTML, 'Checked: d');
 
 		assert.equal(inputs[0].checked, false);

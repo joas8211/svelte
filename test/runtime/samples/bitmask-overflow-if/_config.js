@@ -9,7 +9,7 @@ export default {
 	async test({ assert, component, target, window }) {
 		const button = target.querySelector('button');
 		await button.dispatchEvent(new window.MouseEvent('click'));
-
+		await component.$tick();
 		assert.htmlEqual(
 			target.innerHTML,
 			`

@@ -11,8 +11,9 @@ export default {
 		<p>10</p>
 	`,
 
-	test({ assert, target, component }) {
+	async test({ assert, target, component }) {
 		component.obj = { a: 2, b: 50, c: 30 };
+		await component.$tick();
 		assert.htmlEqual(target.innerHTML, `
 			<p>2</p>
 			<p>50</p>
@@ -21,6 +22,7 @@ export default {
 		`);
 
 		component.c = 22;
+		await component.$tick();
 		assert.htmlEqual(target.innerHTML, `
 			<p>2</p>
 			<p>50</p>
@@ -29,14 +31,16 @@ export default {
 		`);
 
 		component.d = 44;
+		await component.$tick();
 		assert.htmlEqual(target.innerHTML, `
 			<p>2</p>
 			<p>50</p>
 			<p>30</p>
 			<p>44</p>
 		`);
-		
+
 		component.obj = { a: 9, b: 12 };
+		await component.$tick();
 		assert.htmlEqual(target.innerHTML, `
 			<p>9</p>
 			<p>12</p>
@@ -45,6 +49,7 @@ export default {
 		`);
 
 		component.c = 88;
+		await component.$tick();
 		assert.htmlEqual(target.innerHTML, `
 			<p>9</p>
 			<p>12</p>

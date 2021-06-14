@@ -9,7 +9,7 @@ export default {
 		div.insertBefore(text, null);
 		const event = new window.InputEvent('input');
 		await div.dispatchEvent(event);
-
+		await component.$tick();
 		assert.equal(div.textContent, 'a');
 	}
 };

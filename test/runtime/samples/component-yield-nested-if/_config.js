@@ -4,11 +4,13 @@ export default {
 		Inner
 	`,
 
-	test({ assert, component, target }) {
+	async test({ assert, component, target }) {
 		component.foo = false;
+		await component.$tick();
 		assert.htmlEqual( target.innerHTML, '' );
 
 		component.foo = true;
+		await component.$tick();
 		assert.htmlEqual( target.innerHTML, 'One\nInner' );
 	}
 };

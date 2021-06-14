@@ -9,12 +9,14 @@ export default {
 		const eventLeave = new window.MouseEvent('mouseleave');
 
 		await button.dispatchEvent(eventEnter);
+		await component.$tick();
 		assert.htmlEqual(target.innerHTML, `
 			<button>action</button>
 			<div class="tooltip">Perform an Action</div>
 		`);
 
 		await button.dispatchEvent(eventLeave);
+		await component.$tick();
 		assert.htmlEqual(target.innerHTML, `
 			<button>action</button>
 		`);

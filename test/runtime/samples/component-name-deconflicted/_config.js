@@ -4,8 +4,9 @@ export default {
 		<span>2</span>
 	`,
 
-	test({ assert, component, target }) {
+	async test({ assert, component, target }) {
 		component.list = [3, 4];
+		await component.$tick();
 
 		assert.htmlEqual(target.innerHTML, `
 			<span>3</span>

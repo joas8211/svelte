@@ -5,8 +5,9 @@ export default {
 
 	html: 'potato',
 
-	test({ assert, component, target }) {
+	async test({ assert, component, target }) {
 		component.x = 3;
+		await component.$tick();
 		assert.htmlEqual( target.innerHTML, 'potato' );
 	}
 };

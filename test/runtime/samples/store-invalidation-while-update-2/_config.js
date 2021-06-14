@@ -15,6 +15,7 @@ export default {
 
 		input.value = 'foo';
 		await input.dispatchEvent(inputEvent);
+		await component.$tick();
 
 		assert.htmlEqual(target.innerHTML, `
 		<div>foo</div>
@@ -22,8 +23,9 @@ export default {
 		<input>
 		<button>click me</button>
 		`);
-		
+
 		await button.dispatchEvent(clickEvent);
+		await component.$tick();
 		assert.htmlEqual(target.innerHTML, `
 		<div>foo</div>
 		<div>clicked</div>
@@ -33,6 +35,7 @@ export default {
 
 		input.value = 'bar';
 		await input.dispatchEvent(inputEvent);
+		await component.$tick();
 
 		assert.htmlEqual(target.innerHTML, `
 		<div>bar</div>

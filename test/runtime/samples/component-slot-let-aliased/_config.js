@@ -10,8 +10,9 @@ export default {
 			<span>3</span>
 		</div>`,
 
-	test({ assert, component, target }) {
+	async test({ assert, component, target }) {
 		component.things = [1, 2, 3, 4];
+		await component.$tick();
 		assert.htmlEqual(target.innerHTML, `
 			<div>
 				<span>1</span>

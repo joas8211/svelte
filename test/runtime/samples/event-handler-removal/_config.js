@@ -3,11 +3,12 @@
 export default {
 	html: '<input>',
 
-	test({ assert, component }) {
+	async test({ assert, component }) {
 		component.input.focus();
 
 		// this should NOT trigger blur event
 		component.visible = false;
+		await component.$tick();
 		assert.ok(!component.blurred);
 
 		component.visible = true;
@@ -15,6 +16,7 @@ export default {
 
 		// this SHOULD trigger blur event
 		component.input.blur();
+		await component.$tick();
 		assert.ok(component.blurred);
 	}
 };

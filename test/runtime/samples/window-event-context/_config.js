@@ -12,10 +12,12 @@ export default {
 		const event = new window.Event('click');
 
 		await window.dispatchEvent(event);
+		await component.$tick();
 		assert.equal(component.foo, false);
 		assert.htmlEqual(target.innerHTML, 'false');
 
 		await window.dispatchEvent(event);
+		await component.$tick();
 		assert.equal(component.foo, true);
 		assert.htmlEqual(target.innerHTML, 'true');
 	}

@@ -32,7 +32,7 @@ export default {
 
 		options[1].selected = false;
 		await select.dispatchEvent( change );
-
+		await component.$tick();
 		assert.deepEqual( component.selected, [ 'three' ] );
 		assert.htmlEqual( target.innerHTML, `
 			<select multiple>
@@ -46,7 +46,7 @@ export default {
 
 		options[0].selected = true;
 		await select.dispatchEvent( change );
-
+		await component.$tick();
 		assert.deepEqual( component.selected, [ 'one', 'three' ] );
 		assert.htmlEqual( target.innerHTML, `
 			<select multiple>
@@ -59,6 +59,7 @@ export default {
 		` );
 
 		component.selected = [ 'one', 'two' ];
+		await component.$tick();
 
 		assert.ok( options[0].selected );
 		assert.ok( options[1].selected );

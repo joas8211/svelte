@@ -4,8 +4,9 @@ export default {
 		things: ['a', 'b']
 	},
 
-	test({ assert, component, target, window, raf }) {
+	async test({ assert, component, target, window, raf }) {
 		component.x = false;
+		await component.$tick();
 		assert.htmlEqual(target.innerHTML, '');
 	}
 };

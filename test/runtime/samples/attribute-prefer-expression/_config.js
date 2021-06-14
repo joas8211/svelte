@@ -5,13 +5,14 @@ export default {
 		foo: false
 	},
 
-	test({ assert, component, target }) {
+	async test({ assert, component, target }) {
 		const inputs = target.querySelectorAll('input');
 
 		assert.ok(inputs[0].checked);
 		assert.ok(!inputs[1].checked);
 
 		component.foo = true;
+		await component.$tick();
 
 		assert.ok(!inputs[0].checked);
 		assert.ok(inputs[1].checked);

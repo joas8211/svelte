@@ -11,8 +11,9 @@ export default {
 		</svg>
 	`,
 
-	test({ assert, component, target }) {
+	async test({ assert, component, target }) {
 		component.foo = ['a', 'b'];
+		await component.$tick();
 
 		assert.htmlEqual(target.innerHTML, `
 			<svg>

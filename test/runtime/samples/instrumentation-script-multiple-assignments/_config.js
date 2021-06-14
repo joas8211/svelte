@@ -15,7 +15,7 @@ export default {
 		const click = new window.MouseEvent('click');
 
 		await button.dispatchEvent(click);
-
+		await component.$tick();
 		assert.equal(component.foo, 4);
 		assert.equal(component.bar, 2);
 

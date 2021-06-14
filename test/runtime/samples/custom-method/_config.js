@@ -9,6 +9,7 @@ export default {
 		const event = new window.MouseEvent('click');
 
 		await button.dispatchEvent(event);
+		await component.$tick();
 		assert.equal(component.counter, 1);
 		assert.htmlEqual(target.innerHTML, `
 			<button>+1</button>
@@ -16,6 +17,7 @@ export default {
 		`);
 
 		await button.dispatchEvent(event);
+		await component.$tick();
 		assert.equal(component.counter, 2);
 		assert.htmlEqual(target.innerHTML, `
 			<button>+1</button>

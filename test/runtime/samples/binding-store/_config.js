@@ -22,7 +22,7 @@ export default {
 
 		input.value = 'everybody';
 		await input.dispatchEvent(event);
-
+		await component.$tick();
 		assert.htmlEqual(target.innerHTML, `
 			<input>
 			<p>hello everybody</p>

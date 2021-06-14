@@ -13,6 +13,7 @@ export default {
 
 		input1.checked = false;
 		await input1.dispatchEvent(event);
+		await component.$tick();
 
 		selections = Array.from(select.selectedOptions);
 		assert.equal(selections.length, 1);
@@ -21,8 +22,10 @@ export default {
 
 		input2.checked = false;
 		await input2.dispatchEvent(event);
+		await component.$tick();
 		input1.checked = true;
 		await input1.dispatchEvent(event);
+		await component.$tick();
 
 		selections = Array.from(select.selectedOptions);
 		assert.equal(selections.length, 1);
@@ -30,6 +33,7 @@ export default {
 		assert.ok(!selections.includes(option2));
 
 		component.spread = { value: ['Hello', 'World'] };
+		await component.$tick();
 
 		selections = Array.from(select.selectedOptions);
 		assert.equal(selections.length, 2);

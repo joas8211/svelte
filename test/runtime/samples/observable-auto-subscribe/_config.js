@@ -29,6 +29,7 @@ export default {
 		assert.equal(subscribers.length, 0);
 
 		component.visible = true;
+		await component.$tick();
 
 		assert.equal(subscribers.length, 1);
 		assert.htmlEqual(target.innerHTML, `
@@ -43,6 +44,7 @@ export default {
 		`);
 
 		component.visible = false;
+		await component.$tick();
 
 		assert.equal(subscribers.length, 0);
 	}

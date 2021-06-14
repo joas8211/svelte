@@ -7,8 +7,9 @@ export default {
 		<p>true, therefore Foo</p>
 	`,
 
-	test({ assert, component, target }) {
+	async test({ assert, component, target }) {
 		component.x = false;
+		await component.$tick();
 
 		assert.htmlEqual(target.innerHTML, `
 			<p>false, therefore Bar</p>

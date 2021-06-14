@@ -10,7 +10,7 @@ export default {
 		});
 
 		await button.dispatchEvent(event);
-
+		await component.$tick();
 		assert.ok(component.default_was_prevented);
 	}
 };

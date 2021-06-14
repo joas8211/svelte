@@ -19,7 +19,7 @@ export default {
 
 		options[1].selected = true;
 		await select.dispatchEvent(change);
-
+		await component.$tick();
 		assert.equal(component.selected.letter, 'B');
 		assert.htmlEqual(target.innerHTML, `
 			<select>

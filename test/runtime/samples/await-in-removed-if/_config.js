@@ -13,6 +13,7 @@ export default {
 
 	async test({ assert, component, target }) {
 		component.condition = false;
+		await component.$tick();
 
 		fulfil();
 		await new Promise(f => setTimeout(f, 0));

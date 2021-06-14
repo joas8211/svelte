@@ -11,12 +11,13 @@ export default {
 		<p>2: implement client-side hydration</p>
 	`,
 
-	test({ assert, component, target }) {
+	async test({ assert, component, target }) {
 		const [ p1, p2 ] = target.querySelectorAll('p');
 
 		component.todos = [
 			{ id: 234, description: 'implement client-side hydration' }
 		];
+		await component.$tick();
 		assert.htmlEqual(target.innerHTML, '<p>1: implement client-side hydration</p>');
 
 		const [ p3 ] = target.querySelectorAll('p');

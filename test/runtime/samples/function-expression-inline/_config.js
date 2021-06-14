@@ -6,12 +6,12 @@ export default {
 		<p>3</p>
 	`,
 
-	async test({ assert, target, window }) {
+	async test({ assert, component, target, window }) {
 		const button = target.querySelector('button');
 		const click = new window.MouseEvent('click');
 
 		await button.dispatchEvent(click);
-
+		await component.$tick();
 		assert.htmlEqual(target.innerHTML, `
 			<button>click me</button>
 			<p>2</p>

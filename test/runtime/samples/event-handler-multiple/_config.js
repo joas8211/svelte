@@ -8,6 +8,7 @@ export default {
 		const event = new window.MouseEvent('click');
 
 		await button.dispatchEvent(event);
+		await component.$tick();
 		assert.equal(component.clickHandlerOne, 1);
 		assert.equal(component.clickHandlerTwo, 1);
 	}

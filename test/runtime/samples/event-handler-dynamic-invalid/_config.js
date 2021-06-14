@@ -17,12 +17,15 @@ export default {
 
 		// All three should not throw if proper checking is done in runtime code
 		await buttonUndef.dispatchEvent(event);
+		await component.$tick();
 		assert.equal(err, '', err);
 
 		await buttonNull.dispatchEvent(event);
+		await component.$tick();
 		assert.equal(err, '', err);
 
 		await buttonInvalid.dispatchEvent(event);
+		await component.$tick();
 		assert.equal(err, '', err);
 	}
 };

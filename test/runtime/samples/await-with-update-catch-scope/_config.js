@@ -21,6 +21,7 @@ export default {
 		);
 
 		component.error = 'external error occurred';
+		await component.$tick();
 
 		assert.htmlEqual(
 			target.innerHTML,

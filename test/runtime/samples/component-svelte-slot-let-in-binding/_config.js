@@ -20,7 +20,7 @@ export default {
 
 		inputs[2].value = 'd';
 		await inputs[2].dispatchEvent(new window.Event('input'));
-
+		await component.$tick();
 		assert.deepEqual(component.letters, ['a', 'b', 'd']);
 	}
 };

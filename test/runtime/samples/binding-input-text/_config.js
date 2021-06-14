@@ -21,13 +21,14 @@ export default {
 
 		input.value = 'everybody';
 		await input.dispatchEvent(event);
-
+		await component.$tick();
 		assert.htmlEqual(target.innerHTML, `
 			<input>
 			<p>hello everybody</p>
 		`);
 
 		component.name = 'goodbye';
+		await component.$tick();
 		assert.equal(input.value, 'goodbye');
 		assert.htmlEqual(target.innerHTML, `
 			<input>

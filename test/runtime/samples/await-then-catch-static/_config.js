@@ -17,7 +17,7 @@ export default {
 		fulfil(42);
 
 		return promise
-			.then(() => {
+			.then(async () => {
 				assert.htmlEqual(target.innerHTML, `
 					<p>loaded</p>
 				`);
@@ -27,6 +27,7 @@ export default {
 				});
 
 				component.promise = promise;
+				await component.$tick();
 
 				assert.htmlEqual(target.innerHTML, `
 					<p>loading...</p>

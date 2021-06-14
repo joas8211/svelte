@@ -7,6 +7,7 @@ export default {
 
 	async test({ assert, component, target }) {
 		component.foo = 2;
+		await component.$tick();
 		assert.htmlEqual(target.innerHTML, '2');
 	}
 };

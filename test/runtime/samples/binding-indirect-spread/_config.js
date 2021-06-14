@@ -10,13 +10,14 @@ export default {
 		assert.ok(!radio3.checked);
 
 		component.radio = 'radio1';
+		await component.$tick();
 
 		assert.ok(radio1.checked);
 		assert.ok(!radio2.checked);
 		assert.ok(!radio3.checked);
 
 		await radio3.dispatchEvent(event);
-
+		await component.$tick();
 		assert.equal(component.radio, 'radio3');
 		assert.ok(!radio1.checked);
 		assert.ok(!radio2.checked);
@@ -29,13 +30,14 @@ export default {
 		assert.ok(!check3.checked);
 
 		component.check = ['check1', 'check2'];
+		await component.$tick();
 
 		assert.ok(check1.checked);
 		assert.ok(check2.checked);
 		assert.ok(!check3.checked);
 
 		await check3.dispatchEvent(event);
-
+		await component.$tick();
 		assert.deepEqual(component.check, ['check1', 'check2', 'check3']);
 		assert.ok(check1.checked);
 		assert.ok(check2.checked);

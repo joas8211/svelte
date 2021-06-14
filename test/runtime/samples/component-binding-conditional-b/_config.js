@@ -13,8 +13,9 @@ export default {
 		<p>y: foo</p>
 	`,
 
-	test({ assert, component, target }) {
+	async test({ assert, component, target }) {
 		component.x = false;
+		await component.$tick();
 
 		assert.htmlEqual( target.innerHTML, `
 			<p>y: foo</p>

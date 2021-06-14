@@ -3,8 +3,9 @@ export default {
 		<p>10 - 90</p>
 	`,
 
-	test({ assert, component, target }) {
+	async test({ assert, component, target }) {
 		component.width = 50;
+		await component.$tick();
 		assert.htmlEqual(target.innerHTML, `
 			<p>10 - 40</p>
 		`);

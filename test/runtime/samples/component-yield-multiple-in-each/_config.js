@@ -5,8 +5,9 @@ export default {
 		<p>Hello Charles</p>
 	`,
 
-	test({ assert, component, target }) {
+	async test({ assert, component, target }) {
 		component.people = [ 'Alice', 'Charles', 'Bob' ];
+		await component.$tick();
 
 		assert.htmlEqual( target.innerHTML, `
 			<p>Hello Alice</p>

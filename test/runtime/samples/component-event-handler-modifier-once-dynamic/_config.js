@@ -10,9 +10,11 @@ export default {
 
 		await updateButton.dispatchEvent(event);
 		await button.dispatchEvent(event);
+		await component.$tick();
 		assert.equal(component.count, 10);
 
 		await button.dispatchEvent(event);
+		await component.$tick();
 		assert.equal(component.count, 10);
 	}
 };

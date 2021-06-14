@@ -7,13 +7,14 @@ export default {
 		]
 	},
 
-	test({ assert, component, target, window, raf }) {
+	async test({ assert, component, target, window, raf }) {
 		const divs = target.querySelectorAll( 'div' );
 
 		component.things = [
 			{ name: 'a' },
 			{ name: 'c' }
 		];
+		await component.$tick();
 
 		const divs2 = target.querySelectorAll( 'div' );
 		assert.strictEqual( divs[0], divs2[0] );

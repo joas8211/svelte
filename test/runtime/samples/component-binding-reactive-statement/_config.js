@@ -10,12 +10,14 @@ export default {
 		const buttons = target.querySelectorAll('button');
 
 		await buttons[0].dispatchEvent(event);
+		await component.$tick();
 		assert.htmlEqual(target.innerHTML, `
 			<button>main 1</button>
 			<button>button 1</button>
 		`);
 
 		await buttons[1].dispatchEvent(event);
+		await component.$tick();
 		assert.htmlEqual(target.innerHTML, `
 			<button>main 2</button>
 			<button>button 2</button>
@@ -23,6 +25,7 @@ export default {
 
 		// reactive update, reset to 2
 		await buttons[0].dispatchEvent(event);
+		await component.$tick();
 		assert.htmlEqual(target.innerHTML, `
 			<button>main 2</button>
 			<button>button 2</button>
@@ -30,6 +33,7 @@ export default {
 
 		// bound to main, reset to 2
 		await buttons[1].dispatchEvent(event);
+		await component.$tick();
 		assert.htmlEqual(target.innerHTML, `
 			<button>main 2</button>
 			<button>button 2</button>

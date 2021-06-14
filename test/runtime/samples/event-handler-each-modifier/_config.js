@@ -26,17 +26,21 @@ export default {
 		const [item2Btn1, item2Btn2] = item2.querySelectorAll('button');
 
 		const clickEvent = new window.MouseEvent('click');
-		
+
 		await item1Btn1.dispatchEvent(clickEvent);
+		await component.$tick();
 		assert.equal(component.getNormalCount(), 1);
-		
+
 		await item1Btn2.dispatchEvent(clickEvent);
+		await component.$tick();
 		assert.equal(component.getModifierCount(), 1);
 
 		await item2Btn1.dispatchEvent(clickEvent);
+		await component.$tick();
 		assert.equal(component.getNormalCount(), 2);
-		
+
 		await item2Btn2.dispatchEvent(clickEvent);
+		await component.$tick();
 		assert.equal(component.getModifierCount(), 2);
 	}
 };

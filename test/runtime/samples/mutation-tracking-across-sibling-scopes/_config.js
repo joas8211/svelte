@@ -6,7 +6,7 @@ export default {
 		const input = target.querySelector('input');
 		input.checked = false;
 		await input.dispatchEvent(event);
-
+		await component.$tick();
 		assert.htmlEqual(component.div.innerHTML, '<div>-</div><div>-</div>');
 	}
 };

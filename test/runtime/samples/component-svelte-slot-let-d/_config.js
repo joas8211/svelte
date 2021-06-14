@@ -5,12 +5,12 @@ export default {
 		</div>
 	`,
 
-	async test({ assert, target, window }) {
+	async test({ assert, component, target, window }) {
 		const div = target.querySelector('div');
 		const click = new window.MouseEvent('click');
 
 		await div.dispatchEvent(click);
-
+		await component.$tick();
 		assert.htmlEqual(target.innerHTML, `
 			<div>
 				<p>b</p>

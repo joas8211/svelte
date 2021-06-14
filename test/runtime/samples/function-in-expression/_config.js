@@ -5,8 +5,9 @@ export default {
 
 	html: '1, 3, 5, 7, 9',
 
-	test({ assert, component, target }) {
+	async test({ assert, component, target }) {
 		component.numbers = [10, 11, 12, 13, 14, 15, 16];
+		await component.$tick();
 
 		assert.htmlEqual(target.innerHTML, '11, 13, 15');
 	}

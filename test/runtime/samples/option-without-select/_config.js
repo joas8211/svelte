@@ -5,8 +5,9 @@ export default {
 
 	html: "<option value='hello'>hello</option>",
 
-	test({ assert, component, target }) {
+	async test({ assert, component, target }) {
 		component.foo = 'goodbye';
+		await component.$tick();
 		assert.htmlEqual(target.innerHTML, `
 			<option value='goodbye'>goodbye</option>
 		`);

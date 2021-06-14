@@ -18,6 +18,7 @@ export default {
 		const click = new window.MouseEvent('click');
 
 		await button.dispatchEvent(click);
+		await component.$tick();
 		assert.equal(component.get_count(), 1);
 
 		await count.set(42);

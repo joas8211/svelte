@@ -12,19 +12,24 @@ export default {
 		assert.equal(input.value, '');
 
 		component.x = null;
+		await component.$tick();
 		assert.equal(input.value, '');
 
 		component.x = undefined;
+		await component.$tick();
 		assert.equal(input.value, '');
 
 		component.x = 'string';
 		component.x = undefined;
+		await component.$tick();
 		assert.equal(input.value, '');
 
 		component.x = 0;
+		await component.$tick();
 		assert.equal(input.value, '0');
 
 		component.x = undefined;
+		await component.$tick();
 		assert.equal(input.value, '');
 	}
 };

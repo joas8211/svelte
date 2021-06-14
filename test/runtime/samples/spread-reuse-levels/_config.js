@@ -9,8 +9,9 @@ export default {
 		<pre>{}</pre>
 	`,
 
-	test({ assert, component, target }) {
+	async test({ assert, component, target }) {
 		component.a = 2;
+		await component.$tick();
 
 		assert.htmlEqual(target.innerHTML, `
 			<pre>{"a":2,"b":[1],"c":42}</pre>

@@ -9,8 +9,9 @@ export default {
 		after
 	`,
 
-	test({ assert, component, target }) {
+	async test({ assert, component, target }) {
 		component.visible = false;
+		await component.$tick();
 		assert.htmlEqual( target.innerHTML, `
 			before
 
@@ -18,6 +19,7 @@ export default {
 		` );
 
 		component.visible = true;
+		await component.$tick();
 		assert.htmlEqual( target.innerHTML, `
 			before
 			<p>Widget</p>

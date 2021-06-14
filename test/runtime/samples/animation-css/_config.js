@@ -17,7 +17,7 @@ export default {
 		<div>e</div>
 	`,
 
-	test({ assert, component, target, raf }) {
+	async test({ assert, component, target, raf }) {
 		let divs = target.querySelectorAll('div');
 		divs.forEach(div => {
 			div.getBoundingClientRect = function() {
@@ -40,6 +40,7 @@ export default {
 			{ id: 4, name: 'd' },
 			{ id: 1, name: 'a' }
 		];
+		await component.$tick();
 
 		divs = target.querySelectorAll('div');
 		assert.ok(~divs[0].style.animation.indexOf('__svelte'));

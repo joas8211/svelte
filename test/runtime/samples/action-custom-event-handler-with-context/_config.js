@@ -10,7 +10,7 @@ export default {
 		const button = target.querySelector('button');
 
 		await button.dispatchEvent(event);
-
+		await component.$tick();
 		assert.equal(target.innerHTML, '<button>42</button>');
 	}
 };

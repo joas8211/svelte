@@ -14,9 +14,10 @@ export default {
 		<div>foo</div>
 	`,
 
-	test({ assert, component, target }) {
+	async test({ assert, component, target }) {
 		value = 'bar';
 		component.id = 1;
+		await component.$tick();
 
 		assert.equal(count, 4);
 		assert.htmlEqual(target.innerHTML, `

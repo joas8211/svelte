@@ -21,6 +21,7 @@ export default {
 
 	async test({ assert, component, target }) {
 		component.foo = fakeStore(5);
+		await component.$tick();
 
 		assert.htmlEqual(target.innerHTML, '<h1>5</h1>');
 

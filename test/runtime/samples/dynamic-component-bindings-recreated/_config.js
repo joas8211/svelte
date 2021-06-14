@@ -8,8 +8,9 @@ export default {
 		<p>green one</p>
 	`,
 
-	test({ assert, component, target }) {
+	async test({ assert, component, target }) {
 		component.x = false;
+		await component.$tick();
 
 		assert.htmlEqual(target.innerHTML, `
 			<p>red one</p>
@@ -17,6 +18,7 @@ export default {
 
 		component.foo = 'two';
 		component.x = true;
+		await component.$tick();
 
 		assert.htmlEqual(target.innerHTML, `
 			<p>green two</p>

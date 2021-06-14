@@ -21,13 +21,14 @@ export default {
 
 		textarea.value = 'hello';
 		await textarea.dispatchEvent(event);
-
+		await component.$tick();
 		assert.htmlEqual(target.innerHTML, `
 			<textarea></textarea>
 			<p>hello</p>
 		`);
 
 		component.value = 'goodbye';
+		await component.$tick();
 		assert.equal(textarea.value, 'goodbye');
 		assert.htmlEqual(target.innerHTML, `
 			<textarea></textarea>

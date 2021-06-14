@@ -14,7 +14,7 @@ export default {
 		const buttons = target.querySelectorAll('button');
 
 		await buttons[1].dispatchEvent(event);
-
+		await component.$tick();
 		assert.htmlEqual(target.innerHTML, `
 			<button>foo</button>
 			<button>bar</button>

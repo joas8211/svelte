@@ -11,7 +11,7 @@ export default {
 		</div>
 	`,
 
-	test({ assert, component, target, window }) {
+	async test({ assert, component, target, window }) {
 		const buttons = target.querySelectorAll('button');
 
 		const clicks = [];
@@ -24,6 +24,7 @@ export default {
 
 		buttons[0].dispatchEvent(event);
 		buttons[2].dispatchEvent(event);
+		await component.$tick();
 
 		assert.deepEqual(clicks, ['a', 'c']);
 	}
