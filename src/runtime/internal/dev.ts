@@ -102,6 +102,7 @@ export interface SvelteComponentDev {
 	$set(props?: Props): void;
 	$on(event: string, callback: (event: any) => void): () => void;
 	$destroy(): void;
+	$tick(): Promise<void>;
 	[accessor: string]: any;
 }
 interface IComponentOptions {
@@ -172,6 +173,7 @@ export interface SvelteComponentTyped<
 	$set(props?: Partial<Props>): void;
 	$on<K extends Extract<keyof Events, string>>(type: K, callback: (e: Events[K]) => void): () => void;
 	$destroy(): void;
+	$tick(): Promise<void>;
 	[accessor: string]: any;
 }
 /**

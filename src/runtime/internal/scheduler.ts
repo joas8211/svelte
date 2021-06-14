@@ -31,50 +31,50 @@ export function add_flush_callback(fn) {
 	flush_callbacks.push(fn);
 }
 
-let flushing = false;
+let flushing: Promise<void>|null = null;
 const seen_callbacks = new Set();
 export async function flush() {
-	if (flushing) return;
-	flushing = true;
-
-	do {
-		// first, call beforeUpdate functions
-		// and update components
-		for (let i = 0; i < dirty_components.length; i += 1) {
-			const component = dirty_components[i];
-			set_current_component(component);
-			await update(component.$$);
-		}
-		set_current_component(null);
-
-		dirty_components.length = 0;
-
-		while (binding_callbacks.length) binding_callbacks.pop()();
-
-		// then, once components are updated, call
-		// afterUpdate functions. This may cause
-		// subsequent updates...
-		for (let i = 0; i < render_callbacks.length; i += 1) {
-			const callback = render_callbacks[i];
-
-			if (!seen_callbacks.has(callback)) {
-				// ...so guard against infinite loops
-				seen_callbacks.add(callback);
-
-				callback();
+	if (flushing) return flushing;
+	return flushing = resolved_promise.then(async () => {
+		do {
+			// first, call beforeUpdate functions
+			// and update components
+			for (let i = 0; i < dirty_components.length; i += 1) {
+				const component = dirty_components[i];
+				set_current_component(component);
+				await update(component.$$);
 			}
+			set_current_component(null);
+
+			dirty_components.length = 0;
+
+			while (binding_callbacks.length) binding_callbacks.pop()();
+
+			// then, once components are updated, call
+			// afterUpdate functions. This may cause
+			// subsequent updates...
+			for (let i = 0; i < render_callbacks.length; i += 1) {
+				const callback = render_callbacks[i];
+
+				if (!seen_callbacks.has(callback)) {
+					// ...so guard against infinite loops
+					seen_callbacks.add(callback);
+
+					callback();
+				}
+			}
+
+			render_callbacks.length = 0;
+		} while (dirty_components.length);
+
+		while (flush_callbacks.length) {
+			flush_callbacks.pop()();
 		}
 
-		render_callbacks.length = 0;
-	} while (dirty_components.length);
-
-	while (flush_callbacks.length) {
-		flush_callbacks.pop()();
-	}
-
-	update_scheduled = false;
-	flushing = false;
-	seen_callbacks.clear();
+		update_scheduled = false;
+		flushing = null;
+		seen_callbacks.clear();
+	});
 }
 
 async function update($$) {

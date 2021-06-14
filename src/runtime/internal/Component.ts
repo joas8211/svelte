@@ -251,4 +251,8 @@ export class SvelteComponent {
 			this.$$.skip_bound = false;
 		}
 	}
+
+	async $tick() {
+		return flush();
+	}
 }
